@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class HelloController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
