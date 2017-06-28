@@ -9,19 +9,19 @@
     </sql>
 
     <sql id="selectAllField">
-        select id,`name`,desc,id,create_time,modify_time,create_time,modify_time from item
+        select id,`name`,`desc`,id,create_time,modify_time,create_time,modify_time from item
     </sql>
 
     <select id="selectWithPage" parameterType="Map" resultType="Item">
         <include refid="selectAllField"/>
         <include refid="condition"/>
-        <include refid="com.dustpan.common.dao.paged"/>
+        <include refid="com.lomoye.common.dao.paged"/>
     </select>
 
     <select id="selectByCondition" parameterType="Map" resultType="Item">
         <include refid="selectAllField"/>
         <include refid="condition"/>
-        <include refid="com.dustpan.common.dao.orderby"/>
+        <include refid="com.lomoye.common.dao.orderby"/>
     </select>
 
     <select id="selectByPrimaryKey" parameterType="Long" resultType="Item">
@@ -42,7 +42,7 @@
 
     <insert id="insert" keyProperty="id" parameterType="Item">
         insert into item
-        (`name`,desc,create_time,modify_time,create_time,modify_time) 
+        (`name`,`desc`,create_time,modify_time,create_time,modify_time)
         VALUES
         (#{name},#{desc},#{createTime},#{modifyTime},#{createTime},#{modifyTime})
     </insert>
@@ -50,7 +50,7 @@
     <update id="updateByPrimaryKey" parameterType="Item">
         update item set 
         `name`=#{name},
-        desc=#{desc},
+        `desc`=#{desc},
         modify_time=#{modifyTime},
         modify_time=#{modifyTime}
         where id=#{id}
