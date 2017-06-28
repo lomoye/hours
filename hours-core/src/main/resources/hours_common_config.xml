@@ -11,9 +11,9 @@
 
     <typeAliases>
         <typeAlias alias="Item" type="com.lomoye.hours.core.domain.Item"/>
-        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.ItemParam"/>
-        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.ItemParamValue"/>
-        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.ItemRecord"/>
+        <typeAlias alias="ItemParam" type="com.lomoye.hours.core.domain.ItemParam"/>
+        <typeAlias alias="ItemParamValue" type="com.lomoye.hours.core.domain.ItemParamValue"/>
+        <typeAlias alias="ItemRecord" type="com.lomoye.hours.core.domain.ItemRecord"/>
 
 
     </typeAliases>
