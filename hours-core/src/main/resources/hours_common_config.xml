@@ -11,11 +11,19 @@
 
     <typeAliases>
         <typeAlias alias="Item" type="com.lomoye.hours.core.domain.Item"/>
+        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.ItemParam"/>
+        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.ItemParamValue"/>
+        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.ItemRecord"/>
+
+
     </typeAliases>
 
     <mappers>
         <mapper resource="com/lomoye/common/dao/Common.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ItemMapper.xml"/>
+        <mapper resource="com/lomoye/hours/core/dao/ItemParamMapper.xml"/>
+        <mapper resource="com/lomoye/hours/core/dao/ItemParamValueMapper.xml"/>
+        <mapper resource="com/lomoye/hours/core/dao/ItemRecordMapper.xml"/>
 
     </mappers>
 

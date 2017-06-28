@@ -7,18 +7,18 @@ import com.lomoye.common.domain.CommonDomain;
  * 参数记录的值
  */
 public class ItemParamValue extends CommonDomain {
-    private Long ItemParamId;
+    private Long itemParamId;
 
     private Long itemId;
 
     private String value;
 
     public Long getItemParamId() {
-        return ItemParamId;
+        return itemParamId;
     }
 
     public void setItemParamId(Long itemParamId) {
-        ItemParamId = itemParamId;
+        this.itemParamId = itemParamId;
     }
 
     public Long getItemId() {

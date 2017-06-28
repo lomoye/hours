@@ -1,0 +1,75 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lomoye.hours.core.dao.ItemParamMapper">
+    <sql id="condition">
+        <where>
+            <if test="condition.id != null">
+                id = #{condition.id}
+            </if>
+            <if test="condition.itemId != null">
+                AND item_id = #{condition.itemId}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="selectAllField">
+        select id,item_id,`type`,unit,display_name,index,create_time,modify_time from item_param
+    </sql>
+
+    <select id="selectWithPage" parameterType="Map" resultType="ItemParam">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.dustpan.common.dao.paged"/>
+    </select>
+
+    <select id="selectByCondition" parameterType="Map" resultType="ItemParam">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.dustpan.common.dao.orderby"/>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultType="ItemParam">
+        <include refid="selectAllField"/>
+        where id=#{key}
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultType="ItemParam">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        limit 1
+    </select>
+
+    <select id="selectCount" parameterType="Map" resultType="long">
+        select count(*) from item_param
+        <include refid="condition"/>
+    </select>
+
+    <insert id="insert" keyProperty="id" parameterType="ItemParam">
+        insert into item_param
+        (item_id,`type`,unit,display_name,index,create_time,modify_time) 
+        VALUES
+        (#{itemId},#{type},#{unit},#{displayName},#{index},#{createTime},#{modifyTime})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="ItemParam">
+        update item_param set 
+        item_id=#{itemId},
+        `type`=#{type},
+        unit=#{unit},
+        display_name=#{displayName},
+        index=#{index},
+        modify_time=#{modifyTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from item_param
+        where id = #{key}
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="Map">
+        delete from item_param
+        <include refid="condition"/>
+    </delete>
+</mapper>

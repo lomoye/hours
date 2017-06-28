@@ -1,73 +1,72 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lomoye.hours.core.dao.ItemMapper">
+<mapper namespace="com.lomoye.hours.core.dao.ItemRecordMapper">
     <sql id="condition">
         <where>
             <if test="condition.id != null">
                 id = #{condition.id}
             </if>
-            <if test="condition.name != null">
-                AND `name` = #{condition.name}
+            <if test="condition.itemId != null">
+                AND item_id = #{condition.itemId}
             </if>
         </where>
     </sql>
 
     <sql id="selectAllField">
-        select id,`name`,`desc`, create_time,modify_time from item
+        select id,item_id,`day`,create_time,modify_time from item_record
     </sql>
 
-    <select id="selectWithPage" parameterType="Map" resultType="Item">
+    <select id="selectWithPage" parameterType="Map" resultType="ItemRecord">
         <include refid="selectAllField"/>
         <include refid="condition"/>
-        <include refid="com.lomoye.common.dao.paged"/>
+        <include refid="com.dustpan.common.dao.paged"/>
     </select>
 
-    <select id="selectByCondition" parameterType="Map" resultType="Item">
+    <select id="selectByCondition" parameterType="Map" resultType="ItemRecord">
         <include refid="selectAllField"/>
         <include refid="condition"/>
-        <include refid="com.lomoye.common.dao.orderby"/>
+        <include refid="com.dustpan.common.dao.orderby"/>
     </select>
 
-    <select id="selectByPrimaryKey" parameterType="Long" resultType="Item">
+    <select id="selectByPrimaryKey" parameterType="Long" resultType="ItemRecord">
         <include refid="selectAllField"/>
         where id=#{key}
     </select>
 
-    <select id="selectOne" parameterType="Map" resultType="Item">
+    <select id="selectOne" parameterType="Map" resultType="ItemRecord">
         <include refid="selectAllField"/>
         <include refid="condition"/>
         limit 1
     </select>
 
     <select id="selectCount" parameterType="Map" resultType="long">
-        select count(*) from item
+        select count(*) from item_record
         <include refid="condition"/>
     </select>
 
-    <insert id="insert" keyProperty="id" parameterType="Item">
-        insert into item
-        (`name`,`desc`,create_time,modify_time,create_time,modify_time)
+    <insert id="insert" keyProperty="id" parameterType="ItemRecord">
+        insert into item_record
+        (item_id,`day`,create_time,modify_time) 
         VALUES
-        (#{name},#{desc},#{createTime},#{modifyTime},#{createTime},#{modifyTime})
+        (#{itemId},#{day},#{createTime},#{modifyTime})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="Item">
-        update item set 
-        `name`=#{name},
-        `desc`=#{desc},
-        modify_time=#{modifyTime},
+    <update id="updateByPrimaryKey" parameterType="ItemRecord">
+        update item_record set 
+        item_id=#{itemId},
+        `day`=#{day},
         modify_time=#{modifyTime}
         where id=#{id}
     </update>
 
     <delete id="deleteByPrimaryKey" parameterType="Long">
-        delete from item
+        delete from item_record
         where id = #{key}
     </delete>
 
     <delete id="deleteByCondition" parameterType="Map">
-        delete from item
+        delete from item_record
         <include refid="condition"/>
     </delete>
 </mapper>
