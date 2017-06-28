@@ -1,10 +1,12 @@
-package com.lomoye.hours.domain;
+package com.lomoye.hours.core.domain;
+
+import com.lomoye.common.domain.CommonDomain;
 
 /**
  * Created by lomoye on 2017/6/12.
  * 用户
  */
-public class User {
+public class User extends CommonDomain {
     private String name;
 
     private Integer age;

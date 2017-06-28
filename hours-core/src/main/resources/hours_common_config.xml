@@ -10,13 +10,11 @@
     </settings>
 
     <typeAliases>
-
-
+        <typeAlias alias="Item" type="com.lomoye.hours.core.domain.Item"/>
     </typeAliases>
 
     <mappers>
-
-
+        <mapper resource="com/lomoye/hours/core/dao/ItemMapper.xml"/>
 
     </mappers>
 

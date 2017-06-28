@@ -1,6 +1,6 @@
 package com.lomoye.hours.web.controller;
 
-import com.lomoye.hours.domain.User;
+import com.lomoye.hours.core.domain.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

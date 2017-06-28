@@ -1,0 +1,68 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lomoye.hours.core.dao.ItemMapper">
+    <sql id="condition">
+        <where>
+
+        </where>
+    </sql>
+
+    <sql id="selectAllField">
+        select id,`name`,desc,id,create_time,modify_time,create_time,modify_time from item
+    </sql>
+
+    <select id="selectWithPage" parameterType="Map" resultType="Item">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.dustpan.common.dao.paged"/>
+    </select>
+
+    <select id="selectByCondition" parameterType="Map" resultType="Item">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.dustpan.common.dao.orderby"/>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultType="Item">
+        <include refid="selectAllField"/>
+        where id=#{key}
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultType="Item">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        limit 1
+    </select>
+
+    <select id="selectCount" parameterType="Map" resultType="long">
+        select count(*) from item
+        <include refid="condition"/>
+    </select>
+
+    <insert id="insert" keyProperty="id" parameterType="Item">
+        insert into item
+        (`name`,desc,create_time,modify_time,create_time,modify_time) 
+        VALUES
+        (#{name},#{desc},#{createTime},#{modifyTime},#{createTime},#{modifyTime})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="Item">
+        update item set 
+        `name`=#{name},
+        desc=#{desc},
+        modify_time=#{modifyTime},
+        modify_time=#{modifyTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from item
+        where id = #{key}
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="Map">
+        delete from item
+        <include refid="condition"/>
+    </delete>
+</mapper>
