@@ -7,6 +7,9 @@
             <if test="condition.id != null">
                 id = #{condition.id}
             </if>
+            <if test="condition.itemRecordId != null">
+                AND item_record_id = #{condition.itemRecordId}
+            </if>
             <if test="condition.itemId != null">
                 AND item_id = #{condition.itemId}
             </if>
@@ -17,7 +20,7 @@
     </sql>
 
     <sql id="selectAllField">
-        select id,item_param_id,item_id,`value`,create_time,modify_time from item_param_value
+        select id, item_record_id,item_param_id,item_id,`value`,create_time,modify_time from item_param_value
     </sql>
 
     <select id="selectWithPage" parameterType="Map" resultType="ItemParamValue">
@@ -50,13 +53,14 @@
 
     <insert id="insert" keyProperty="id" parameterType="ItemParamValue">
         insert into item_param_value
-        (item_param_id,item_id,`value`,create_time,modify_time)
+        (item_record_id,item_param_id,item_id,`value`,create_time,modify_time)
         VALUES
-        (#{itemParamId},#{itemId},#{value},#{createTime},#{modifyTime})
+        (#{itemRecordId},#{itemParamId},#{itemId},#{value},#{createTime},#{modifyTime})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="ItemParamValue">
-        update item_param_value set 
+        update item_param_value set
+        item_record_id=#{itemRecordId},
         item_param_id=#{itemParamId},
         item_id=#{itemId},
         `value`=#{value},

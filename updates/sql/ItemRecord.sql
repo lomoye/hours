@@ -14,6 +14,7 @@ CREATE TABLE item_param(
 DROP TABLE IF EXISTS item_param_value;
 CREATE TABLE item_param_value(
   id bigint(20) NOT NULL AUTO_INCREMENT,
+  item_record_id bigint(20) NOT NULL,
   item_param_id bigint(20) NOT NULL,
   item_id bigint(20) NOT NULL,
   `value` varchar(128) NOT NULL,

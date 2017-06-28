@@ -1,6 +1,9 @@
 package com.lomoye.hours.web.controller;
 
-import com.lomoye.hours.core.domain.ItemParamValue;
+
+import com.lomoye.hours.core.domain.ItemRecord;
+import com.lomoye.hours.core.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
 
 /**
  * Created by lomoye on 2017/6/28.
@@ -18,11 +21,15 @@ import java.util.List;
  */
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
-@RequestMapping("/api/itemParamValue")
-public class ItemParamValueController {
-    @RequestMapping(value = "/batch", method = RequestMethod.POST)
+@RequestMapping("/api/itemRecord")
+public class ItemRecordController {
+
+    @Autowired
+    private ItemService itemService;
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    Boolean batchAddItemParamValue(HttpServletRequest request, @RequestBody List<ItemParamValue> values) {
-        return true;
+    ItemRecord addItemRecord(HttpServletRequest request, @RequestBody ItemRecord itemRecord) {
+        return itemService.addItemRecord(itemRecord);
     }
 }

@@ -6,4 +6,5 @@ import com.lomoye.hours.core.domain.ItemParamValue;
 
 
 public interface ItemParamValueManager extends DomainManager<Long,ItemParamValue> {
+    void deleteByItemRecordId(Long itemRecordId);
 }

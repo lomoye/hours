@@ -1,6 +1,7 @@
 package com.lomoye.hours.core.manager.impl;
 
 
+import com.google.common.base.Preconditions;
 import com.lomoye.common.dao.BasicMapper;
 import com.lomoye.common.manager.AbstractManager;
 import com.lomoye.hours.core.dao.ItemParamValueMapper;
@@ -21,5 +22,14 @@ public class ItemParamValueManagerImpl extends AbstractManager<ItemParamValue> i
     @Override
     protected BasicMapper<Long, ItemParamValue> getMapper() {
         return mapper;
+    }
+
+    @Override
+    public void deleteByItemRecordId(Long itemRecordId) {
+        Preconditions.checkArgument(itemRecordId != null);
+        ItemParamValue condition = new ItemParamValue();
+        condition.setItemRecordId(itemRecordId);
+
+        mapper.deleteByCondition(condition);
     }
 }

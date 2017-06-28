@@ -3,6 +3,7 @@ package com.lomoye.hours.core.domain;
 import com.lomoye.common.domain.CommonDomain;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -13,6 +14,11 @@ public class ItemRecord extends CommonDomain {
     private Long itemId;
 
     private Date day;//日期
+
+    /**
+     * 非持久化
+     */
+    private List<ItemParamValue> itemParamValueList;
 
     public Long getItemId() {
         return itemId;
@@ -28,5 +34,13 @@ public class ItemRecord extends CommonDomain {
 
     public void setDay(Date day) {
         this.day = day;
+    }
+
+    public List<ItemParamValue> getItemParamValueList() {
+        return itemParamValueList;
+    }
+
+    public void setItemParamValueList(List<ItemParamValue> itemParamValueList) {
+        this.itemParamValueList = itemParamValueList;
     }
 }
