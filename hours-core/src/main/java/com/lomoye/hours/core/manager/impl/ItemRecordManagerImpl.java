@@ -1,5 +1,6 @@
 package com.lomoye.hours.core.manager.impl;
 
+import com.google.common.base.Preconditions;
 import com.lomoye.common.dao.BasicMapper;
 import com.lomoye.common.manager.AbstractManager;
 import com.lomoye.common.util.DateUtil;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 import static com.lomoye.common.util.DateUtil.getDailyStartTime;
 
@@ -28,11 +28,13 @@ public class ItemRecordManagerImpl extends AbstractManager<ItemRecord> implement
     }
 
     @Override
-    public ItemRecord findTodayItemRecord() {
+    public ItemRecord findTodayItemRecord(Long itemId) {
+        Preconditions.checkArgument(itemId != null);
         Date day = DateUtil.getDailyStartTime(new Date());
 
         ItemRecord itemRecord = new ItemRecord();
         itemRecord.setDay(day);
+        itemRecord.setItemId(itemId);
 
         return mapper.selectOne(itemRecord);
     }

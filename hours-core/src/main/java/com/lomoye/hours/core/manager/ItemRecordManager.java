@@ -6,5 +6,5 @@ import com.lomoye.hours.core.domain.ItemRecord;
 
 
 public interface ItemRecordManager extends DomainManager<Long,ItemRecord> {
-    ItemRecord findTodayItemRecord();
+    ItemRecord findTodayItemRecord(Long itemId);
 }

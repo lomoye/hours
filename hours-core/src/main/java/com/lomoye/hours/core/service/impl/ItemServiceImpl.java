@@ -27,7 +27,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemRecord addItemRecord(ItemRecord itemRecord) {
-        ItemRecord oldRecord = itemRecordManager.findTodayItemRecord();
+        ItemRecord oldRecord = itemRecordManager.findTodayItemRecord(itemRecord.getItemId());
 
         if (oldRecord == null) {
             itemRecord.setDay(DateUtil.getDailyStartTime(new Date()));
