@@ -1,6 +1,11 @@
 package com.lomoye.hours.core.service.impl;
 
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimaps;
 import com.lomoye.common.util.DateUtil;
+import com.lomoye.hours.core.domain.ItemParam;
 import com.lomoye.hours.core.domain.ItemParamValue;
 import com.lomoye.hours.core.domain.ItemRecord;
 import com.lomoye.hours.core.manager.ItemParamValueManager;
@@ -10,8 +15,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lomoye on 2017/6/28.
@@ -40,6 +48,31 @@ public class ItemServiceImpl implements ItemService {
 
 
         return itemRecord;
+    }
+
+    @Override
+    public List<ItemRecord> listItemRecord(Long itemId) {
+        List<ItemRecord> itemRecords = itemRecordManager.listItemRecordByItemId(itemId);
+
+        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemRecordIds(FluentIterable.from(itemRecords).transform(new Function<ItemRecord, Long>() {
+            @Override
+            public Long apply(ItemRecord input) {
+                return input.getId();
+            }
+        }));
+
+        Map<Long, List<ItemParamValue>> map = Multimaps.asMap(Multimaps.index(itemParamValues, new Function<ItemParamValue, Long>() {
+            @Override
+            public Long apply(ItemParamValue input) {
+                return input.getItemRecordId();
+            }
+        }));
+
+        for (ItemRecord record : itemRecords) {
+            record.setItemParamValueList(map.get(record.getId()));
+        }
+
+        return itemRecords;
     }
 
 
