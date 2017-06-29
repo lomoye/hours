@@ -10,6 +10,9 @@
             <if test="condition.itemId != null">
                 AND item_id = #{condition.itemId}
             </if>
+            <if test="condition.day != null">
+                AND `day` = #{condition.day}
+            </if>
         </where>
     </sql>
 
