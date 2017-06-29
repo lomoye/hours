@@ -24,7 +24,7 @@ public class HelloController {
     @ResponseBody
     User giveHelloData(HttpServletRequest request) {
         User user = new User();
-        user.setName("lomoye");
+        user.setName("自动部署");
         user.setAge(18);
 
         return user;
