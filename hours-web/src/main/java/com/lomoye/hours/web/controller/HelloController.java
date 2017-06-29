@@ -1,5 +1,6 @@
 package com.lomoye.hours.web.controller;
 
+import com.lomoye.common.dto.ResultData;
 import com.lomoye.hours.core.domain.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,11 @@ public class HelloController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    User giveHelloData(HttpServletRequest request) {
+    ResultData<User> giveHelloData(HttpServletRequest request) {
         User user = new User();
         user.setName("庆祝服务器定时发布任务脚本运行成功!");
         user.setAge(18);
 
-        return user;
+        return new ResultData<>(user);
     }
 }

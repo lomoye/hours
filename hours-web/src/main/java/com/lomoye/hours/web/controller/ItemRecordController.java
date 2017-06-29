@@ -1,6 +1,7 @@
 package com.lomoye.hours.web.controller;
 
 
+import com.lomoye.common.dto.ResultData;
 import com.lomoye.hours.core.domain.ItemRecord;
 import com.lomoye.hours.core.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ItemRecordController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    ItemRecord addItemRecord(HttpServletRequest request, @RequestBody ItemRecord itemRecord) {
-        return itemService.addItemRecord(itemRecord);
+    ResultData<ItemRecord> addItemRecord(HttpServletRequest request, @RequestBody ItemRecord itemRecord) {
+        return new ResultData<>(itemService.addItemRecord(itemRecord));
     }
 }

@@ -1,5 +1,6 @@
 package com.lomoye.hours.web.controller;
 
+import com.lomoye.common.dto.ResultList;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.manager.ItemManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class ItemController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    List<Item> listItems(HttpServletRequest request) {
+    ResultList<Item> listItems(HttpServletRequest request) {
         List<Item> items = itemManager.listAll();
 
-        return items;
+        return new ResultList<>(items);
     }
 
 }
