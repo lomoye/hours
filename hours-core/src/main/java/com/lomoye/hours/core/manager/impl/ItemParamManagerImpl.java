@@ -33,7 +33,6 @@ public class ItemParamManagerImpl extends AbstractManager<ItemParam> implements 
         Preconditions.checkArgument(itemId != null);
         ItemParam condition = new ItemParam();
         condition.setItemId(itemId);
-
         List<OrderCondition> orderConditions = new ArrayList<>();
         orderConditions.add(new OrderCondition("`index`", "asc"));
 
