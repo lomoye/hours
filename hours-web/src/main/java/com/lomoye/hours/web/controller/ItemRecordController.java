@@ -37,7 +37,7 @@ public class ItemRecordController {
         return new ResultData<>(itemService.addItemRecord(itemRecord));
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     ResultData<ItemRecordDto> listItemRecordDto(HttpServletRequest request, Long itemId) {
         List<ItemRecord> itemRecordList = itemService.listItemRecord(itemId);
