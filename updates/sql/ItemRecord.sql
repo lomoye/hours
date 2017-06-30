@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS item_param;
 CREATE TABLE item_param(
   id bigint(20) NOT NULL AUTO_INCREMENT,
   item_id bigint(20) NOT NULL,
-  `type` varchar(128) NOT NULL,
+  `type` varchar(128),
   unit varchar(128) NOT NULL,
   display_name varchar(128) NOT NULL,
   `index` int(20) NOT NULL,

@@ -47,9 +47,9 @@
 
     <insert id="insert" keyProperty="id" parameterType="Item">
         insert into item
-        (`name`,`desc`,create_time,modify_time,create_time,modify_time)
+        (`name`,`desc`, create_time,modify_time)
         VALUES
-        (#{name},#{desc},#{createTime},#{modifyTime},#{createTime},#{modifyTime})
+        (#{name},#{desc},#{createTime},#{modifyTime})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="Item">

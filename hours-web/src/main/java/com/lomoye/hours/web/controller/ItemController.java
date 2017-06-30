@@ -1,11 +1,14 @@
 package com.lomoye.hours.web.controller;
 
+import com.lomoye.common.dto.ResultData;
 import com.lomoye.common.dto.ResultList;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.manager.ItemManager;
+import com.lomoye.hours.core.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +27,8 @@ import java.util.List;
 public class ItemController {
     @Autowired
     private ItemManager itemManager;
+    @Autowired
+    private ItemService itemService;
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
@@ -32,5 +37,12 @@ public class ItemController {
 
         return new ResultList<>(items);
     }
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    @ResponseBody
+    ResultData<Item> addItem(HttpServletRequest request, @RequestBody Item item) {
+        return new ResultData<>(itemService.addItem(item));
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.lomoye.hours.core.service;
 
+import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemRecord;
 
 
@@ -10,4 +11,6 @@ import com.lomoye.hours.core.domain.ItemRecord;
  */
 public interface ItemService {
     ItemRecord addItemRecord(ItemRecord itemRecord);
+
+    Item addItem(Item item);
 }

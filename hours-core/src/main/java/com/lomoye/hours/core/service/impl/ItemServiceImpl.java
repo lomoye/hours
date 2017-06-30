@@ -5,9 +5,12 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.lomoye.common.util.DateUtil;
+import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemParam;
 import com.lomoye.hours.core.domain.ItemParamValue;
 import com.lomoye.hours.core.domain.ItemRecord;
+import com.lomoye.hours.core.manager.ItemManager;
+import com.lomoye.hours.core.manager.ItemParamManager;
 import com.lomoye.hours.core.manager.ItemParamValueManager;
 import com.lomoye.hours.core.manager.ItemRecordManager;
 import com.lomoye.hours.core.service.ItemService;
@@ -15,11 +18,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Created by lomoye on 2017/6/28.
@@ -29,9 +31,12 @@ import java.util.Map;
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemRecordManager itemRecordManager;
-
     @Autowired
     private ItemParamValueManager itemParamValueManager;
+    @Autowired
+    private ItemManager itemManager;
+    @Autowired
+    private ItemParamManager itemParamManager;
 
     @Override
     public ItemRecord addItemRecord(ItemRecord itemRecord) {
@@ -49,6 +54,24 @@ public class ItemServiceImpl implements ItemService {
 
 
         return itemRecord;
+    }
+
+    @Override
+    public Item addItem(Item item) {
+        itemManager.save(item);
+
+        List<ItemParam> itemParams = item.getItemParams();
+
+        int index = 0;
+        for (ItemParam itemParam : itemParams) {
+            itemParam.setItemId(item.getId());
+            itemParam.setIndex(index++);
+            itemParam.setType("number");//目前只有数字类型
+
+            itemParamManager.save(itemParam);
+        }
+
+        return item;
     }
 
 
