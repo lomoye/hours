@@ -2,7 +2,7 @@ package com.lomoye.hours.core.service;
 
 import com.lomoye.hours.core.domain.ItemRecord;
 
-import java.util.List;
+
 
 /**
  * Created by lomoye on 2017/6/28.
@@ -10,6 +10,4 @@ import java.util.List;
  */
 public interface ItemService {
     ItemRecord addItemRecord(ItemRecord itemRecord);
-
-    List<ItemRecord> listItemRecord(Long itemId);
 }

@@ -2,6 +2,8 @@ package com.lomoye.hours.core.domain;
 
 import com.lomoye.common.domain.CommonDomain;
 
+import java.util.Date;
+
 /**
  * Created by lomoye on 2017/6/28.
  * 参数记录的值
@@ -14,6 +16,8 @@ public class ItemParamValue extends CommonDomain {
     private Long itemId;
 
     private String value;
+
+    private Date day;//日期
 
     public Long getItemRecordId() {
         return itemRecordId;
@@ -45,5 +49,13 @@ public class ItemParamValue extends CommonDomain {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Date getDay() {
+        return day;
+    }
+
+    public void setDay(Date day) {
+        this.day = day;
     }
 }

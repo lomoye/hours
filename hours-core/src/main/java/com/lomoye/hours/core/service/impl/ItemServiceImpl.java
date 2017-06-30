@@ -43,36 +43,12 @@ public class ItemServiceImpl implements ItemService {
             saveItemParamValue(itemRecord);
         } else {
             itemRecord.setId(oldRecord.getId());
+            itemRecord.setDay(oldRecord.getDay());
             updateItemParamValue(itemRecord);
         }
 
 
         return itemRecord;
-    }
-
-    @Override
-    public List<ItemRecord> listItemRecord(Long itemId) {
-        List<ItemRecord> itemRecords = itemRecordManager.listItemRecordByItemId(itemId);
-
-        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemRecordIds(FluentIterable.from(itemRecords).transform(new Function<ItemRecord, Long>() {
-            @Override
-            public Long apply(ItemRecord input) {
-                return input.getId();
-            }
-        }));
-
-        Map<Long, List<ItemParamValue>> map = Multimaps.asMap(Multimaps.index(itemParamValues, new Function<ItemParamValue, Long>() {
-            @Override
-            public Long apply(ItemParamValue input) {
-                return input.getItemRecordId();
-            }
-        }));
-
-        for (ItemRecord record : itemRecords) {
-            record.setItemParamValueList(map.get(record.getId()));
-        }
-
-        return itemRecords;
     }
 
 
@@ -95,6 +71,7 @@ public class ItemServiceImpl implements ItemService {
             itemParamValue.setId(null);
             itemParamValue.setItemId(itemRecord.getItemId());
             itemParamValue.setItemRecordId(itemRecord.getId());
+            itemParamValue.setDay(itemRecord.getDay());
             itemParamValueManager.save(itemParamValue);
         }
     }

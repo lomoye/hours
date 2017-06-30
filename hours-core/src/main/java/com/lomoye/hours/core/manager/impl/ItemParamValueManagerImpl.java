@@ -3,7 +3,9 @@ package com.lomoye.hours.core.manager.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
 import com.lomoye.common.dao.BasicMapper;
+import com.lomoye.common.dao.OrderCondition;
 import com.lomoye.common.manager.AbstractManager;
 import com.lomoye.hours.core.dao.ItemParamValueMapper;
 import com.lomoye.hours.core.domain.ItemParamValue;
@@ -37,7 +39,12 @@ public class ItemParamValueManagerImpl extends AbstractManager<ItemParamValue> i
     }
 
     @Override
-    public List<ItemParamValue> listByItemRecordIds(FluentIterable<Long> transform) {
-        return null;
+    public List<ItemParamValue> listByItemIdOrderByDay(Long itemId) {
+        Preconditions.checkArgument(itemId != null);
+        ItemParamValue condition = new ItemParamValue();
+        condition.setItemId(itemId);
+        return nonEmptyList(mapper.selectByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", "asc"))));
     }
+
+
 }

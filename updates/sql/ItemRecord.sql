@@ -18,6 +18,7 @@ CREATE TABLE item_param_value(
   item_param_id bigint(20) NOT NULL,
   item_id bigint(20) NOT NULL,
   `value` varchar(128) NOT NULL,
+  `day` datetime NOT NULL,
   create_time datetime NOT NULL,
   modify_time datetime NOT NULL,
   PRIMARY KEY (id)

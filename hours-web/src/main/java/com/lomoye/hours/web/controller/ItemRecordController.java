@@ -2,10 +2,12 @@ package com.lomoye.hours.web.controller;
 
 
 import com.lomoye.common.dto.ResultData;
+import com.lomoye.common.dto.ResultList;
 import com.lomoye.common.exception.BusinessException;
 import com.lomoye.hours.core.domain.ItemRecord;
 import com.lomoye.hours.core.service.ItemService;
 import com.lomoye.hours.web.dto.ItemRecordDto;
+import com.lomoye.hours.web.service.ViewItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
 
 
 /**
@@ -30,6 +32,8 @@ public class ItemRecordController {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private ViewItemService viewItemService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
@@ -39,8 +43,7 @@ public class ItemRecordController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
-    ResultData<ItemRecordDto> listItemRecordDto(HttpServletRequest request, Long itemId) {
-        List<ItemRecord> itemRecordList = itemService.listItemRecord(itemId);
-        return new ResultData<>();
+    ResultList<ItemRecordDto> listItemRecordDto(HttpServletRequest request, Long itemId) {
+        return new ResultList<>(viewItemService.listItemRecordDto(itemId));
     }
 }
