@@ -2,6 +2,7 @@ package com.lomoye.hours.web.dto;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.lomoye.common.util.DateUtil;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemParam;
 import com.lomoye.hours.core.domain.ItemParamValue;
@@ -23,20 +24,20 @@ public class ItemRecordDto {
 
     private List<String> yAxis;//y轴数据
 
-    private List<Date> days;//日期 xAxis
+    private List<String> days;//日期 xAxis
 
     public static ItemRecordDto valueOf(ItemParam itemParam, List<ItemParamValue> values, Item item) {
         ItemRecordDto dto = new ItemRecordDto();
 
-        dto.setName(item.getName());
+        dto.setName(item.getName() + "-" + itemParam.getDisplayName());
         dto.setDesc(item.getDesc());
         dto.setUnit(itemParam.getUnit());
         dto.setyAxisName(itemParam.getDisplayName());
 
-        dto.setDays(FluentIterable.from(values).transform(new Function<ItemParamValue, Date>() {
+        dto.setDays(FluentIterable.from(values).transform(new Function<ItemParamValue, String>() {
             @Override
-            public Date apply(ItemParamValue input) {
-                return input.getDay();
+            public String apply(ItemParamValue input) {
+                return DateUtil.format(input.getDay(), "yyyy-MM-dd");
             }
         }).toList());
 
@@ -94,11 +95,11 @@ public class ItemRecordDto {
         this.yAxis = yAxis;
     }
 
-    public List<Date> getDays() {
+    public List<String> getDays() {
         return days;
     }
 
-    public void setDays(List<Date> days) {
+    public void setDays(List<String> days) {
         this.days = days;
     }
 }

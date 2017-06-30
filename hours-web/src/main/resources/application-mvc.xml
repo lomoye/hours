@@ -28,7 +28,7 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
-    <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+    <bean id="jacksonObjectMapper" class="com.lomoye.common.serialization.JacksonObjectMapper"/>
 
 
     <mvc:default-servlet-handler/>
