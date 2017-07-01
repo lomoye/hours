@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 @RequestMapping("/api/itemRecord")
-public class ItemRecordController {
+public class ItemRecordController extends BaseController {
 
     @Autowired
     private ItemService itemService;

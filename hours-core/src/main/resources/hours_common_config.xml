@@ -14,6 +14,7 @@
         <typeAlias alias="ItemParam" type="com.lomoye.hours.core.domain.ItemParam"/>
         <typeAlias alias="ItemParamValue" type="com.lomoye.hours.core.domain.ItemParamValue"/>
         <typeAlias alias="ItemRecord" type="com.lomoye.hours.core.domain.ItemRecord"/>
+        <typeAlias alias="User" type="com.lomoye.hours.core.domain.User"/>
 
 
     </typeAliases>
@@ -24,6 +25,7 @@
         <mapper resource="com/lomoye/hours/core/dao/ItemParamMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ItemParamValueMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ItemRecordMapper.xml"/>
+        <mapper resource="com/lomoye/hours/core/dao/UserMapper.xml"/>
 
     </mappers>
 

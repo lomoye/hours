@@ -7,23 +7,33 @@ import com.lomoye.common.domain.CommonDomain;
  * 用户
  */
 public class User extends CommonDomain {
-    private String name;
+    private String nick;
 
-    private Integer age;
+    private String mobile;
 
-    public String getName() {
-        return name;
+    private String password;
+
+    public String getNick() {
+        return nick;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

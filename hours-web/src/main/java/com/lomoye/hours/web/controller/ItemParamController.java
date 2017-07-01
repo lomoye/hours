@@ -25,7 +25,7 @@ import java.util.List;
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 @RequestMapping("/api/itemParam")
-public class ItemParamController {
+public class ItemParamController extends BaseController {
 
     @Autowired
     private ItemParamManager itemParamManager;
