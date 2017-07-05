@@ -40,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
 
         if (oldRecord == null) {
             itemRecord.setDay(DateUtil.getDailyStartTime(new Date()));
+            itemRecord.setUserId(userId);
             itemRecordManager.save(itemRecord);
             saveItemParamValue(userId, itemRecord);
         } else {
