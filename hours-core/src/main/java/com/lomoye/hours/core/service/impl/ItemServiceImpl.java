@@ -1,9 +1,5 @@
 package com.lomoye.hours.core.service.impl;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimaps;
 import com.lomoye.common.util.DateUtil;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemParam;
@@ -39,17 +35,17 @@ public class ItemServiceImpl implements ItemService {
     private ItemParamManager itemParamManager;
 
     @Override
-    public ItemRecord addItemRecord(ItemRecord itemRecord) {
-        ItemRecord oldRecord = itemRecordManager.findTodayItemRecord(itemRecord.getItemId());
+    public ItemRecord addItemRecord(Long userId, ItemRecord itemRecord) {
+        ItemRecord oldRecord = itemRecordManager.findTodayItemRecord(userId, itemRecord.getItemId());
 
         if (oldRecord == null) {
             itemRecord.setDay(DateUtil.getDailyStartTime(new Date()));
             itemRecordManager.save(itemRecord);
-            saveItemParamValue(itemRecord);
+            saveItemParamValue(userId, itemRecord);
         } else {
             itemRecord.setId(oldRecord.getId());
             itemRecord.setDay(oldRecord.getDay());
-            updateItemParamValue(itemRecord);
+            updateItemParamValue(userId, itemRecord);
         }
 
 
@@ -57,13 +53,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item addItem(Item item) {
+    public Item addItem(Long userId, Item item) {
+        item.setUserId(userId);
         itemManager.save(item);
 
         List<ItemParam> itemParams = item.getItemParams();
 
         int index = 0;
         for (ItemParam itemParam : itemParams) {
+            itemParam.setUserId(userId);
             itemParam.setItemId(item.getId());
             itemParam.setIndex(index++);
             itemParam.setType("number");//目前只有数字类型
@@ -75,23 +73,24 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-    private void updateItemParamValue(ItemRecord itemRecord) {
-        itemParamValueManager.deleteByItemRecordId(itemRecord.getId());
+    private void updateItemParamValue(Long userId, ItemRecord itemRecord) {
+        itemParamValueManager.deleteByItemRecordId(userId, itemRecord.getId());
 
-        batchSaveItemParamValue(itemRecord);
+        batchSaveItemParamValue(userId, itemRecord);
     }
 
-    private void saveItemParamValue(ItemRecord itemRecord) {
-        batchSaveItemParamValue(itemRecord);
+    private void saveItemParamValue(Long userId, ItemRecord itemRecord) {
+        batchSaveItemParamValue(userId, itemRecord);
     }
 
-    private void batchSaveItemParamValue(ItemRecord itemRecord) {
+    private void batchSaveItemParamValue(Long userId, ItemRecord itemRecord) {
         List<ItemParamValue> itemParamValueList = itemRecord.getItemParamValueList();
         if (CollectionUtils.isEmpty(itemParamValueList)) {
             return;
         }
         for (ItemParamValue itemParamValue : itemParamValueList) {
             itemParamValue.setId(null);
+            itemParamValue.setUserId(userId);
             itemParamValue.setItemId(itemRecord.getItemId());
             itemParamValue.setItemRecordId(itemRecord.getId());
             itemParamValue.setDay(itemRecord.getDay());

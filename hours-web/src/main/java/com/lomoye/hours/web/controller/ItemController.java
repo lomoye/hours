@@ -3,6 +3,7 @@ package com.lomoye.hours.web.controller;
 import com.lomoye.common.dto.ResultData;
 import com.lomoye.common.dto.ResultList;
 import com.lomoye.hours.core.domain.Item;
+import com.lomoye.hours.core.domain.User;
 import com.lomoye.hours.core.manager.ItemManager;
 import com.lomoye.hours.core.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class ItemController extends BaseController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     ResultList<Item> listItems(HttpServletRequest request) {
-        List<Item> items = itemManager.listAll();
+        User user = getSessionUser(request);
+        List<Item> items = itemManager.listByUserId(user.getId());
 
         return new ResultList<>(items);
     }
@@ -41,7 +43,9 @@ public class ItemController extends BaseController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     ResultData<Item> addItem(HttpServletRequest request, @RequestBody Item item) {
-        return new ResultData<>(itemService.addItem(item));
+        User user = getSessionUser(request);
+
+        return new ResultData<>(itemService.addItem(user.getId(), item));
     }
 
 

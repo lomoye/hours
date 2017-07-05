@@ -5,6 +5,7 @@ import com.lomoye.common.dto.ResultData;
 import com.lomoye.common.dto.ResultList;
 import com.lomoye.common.exception.BusinessException;
 import com.lomoye.hours.core.domain.ItemRecord;
+import com.lomoye.hours.core.domain.User;
 import com.lomoye.hours.core.service.ItemService;
 import com.lomoye.hours.web.dto.ItemRecordDto;
 import com.lomoye.hours.web.service.ViewItemService;
@@ -38,12 +39,14 @@ public class ItemRecordController extends BaseController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
     ResultData<ItemRecord> addItemRecord(HttpServletRequest request, @RequestBody ItemRecord itemRecord) {
-        return new ResultData<>(itemService.addItemRecord(itemRecord));
+        User user = getSessionUser(request);
+        return new ResultData<>(itemService.addItemRecord(user.getId(), itemRecord));
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     ResultList<ItemRecordDto> listItemRecordDto(HttpServletRequest request, Long itemId) {
-        return new ResultList<>(viewItemService.listItemRecordDto(itemId));
+        User user = getSessionUser(request);
+        return new ResultList<>(viewItemService.listItemRecordDto(user.getId(), itemId));
     }
 }

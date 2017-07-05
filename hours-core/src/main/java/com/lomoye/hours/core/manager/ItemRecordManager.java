@@ -8,7 +8,5 @@ import java.util.List;
 
 
 public interface ItemRecordManager extends DomainManager<Long,ItemRecord> {
-    ItemRecord findTodayItemRecord(Long itemId);
-
-    List<ItemRecord> listItemRecordByItemId(Long itemId);
+    ItemRecord findTodayItemRecord(Long userId, Long itemId);
 }

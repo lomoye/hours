@@ -10,5 +10,5 @@ import java.util.List;
  * item数据拼装service
  */
 public interface ViewItemService {
-    List<ItemRecordDto> listItemRecordDto(Long itemId);
+    List<ItemRecordDto> listItemRecordDto(Long userId, Long itemId);
 }

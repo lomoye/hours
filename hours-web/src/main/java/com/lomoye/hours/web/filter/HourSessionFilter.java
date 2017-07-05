@@ -32,7 +32,6 @@ public class HourSessionFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String path = request.getServletPath();
-        System.out.println(path);
         if (path.contains("login")) {
             chain.doFilter(request, response);
             return;

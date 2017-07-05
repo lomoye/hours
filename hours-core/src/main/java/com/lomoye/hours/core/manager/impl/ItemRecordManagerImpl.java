@@ -31,24 +31,16 @@ public class ItemRecordManagerImpl extends AbstractManager<ItemRecord> implement
     }
 
     @Override
-    public ItemRecord findTodayItemRecord(Long itemId) {
-        Preconditions.checkArgument(itemId != null);
+    public ItemRecord findTodayItemRecord(Long userId, Long itemId) {
+        Preconditions.checkArgument(userId != null && itemId != null);
         Date day = DateUtil.getDailyStartTime(new Date());
 
-        ItemRecord itemRecord = new ItemRecord();
-        itemRecord.setDay(day);
-        itemRecord.setItemId(itemId);
-
-        return mapper.selectOne(itemRecord);
-    }
-
-    @Override
-    public List<ItemRecord> listItemRecordByItemId(Long itemId) {
-        Preconditions.checkArgument(itemId != null);
         ItemRecord condition = new ItemRecord();
+        condition.setUserId(userId);
+        condition.setDay(day);
         condition.setItemId(itemId);
-        return nonEmptyList(mapper.selectByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", "asc"))));
-    }
 
+        return mapper.selectOne(condition);
+    }
 
 }

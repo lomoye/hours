@@ -7,6 +7,8 @@ import com.lomoye.common.domain.CommonDomain;
  * 记录的参数类
  */
 public class ItemParam extends CommonDomain {
+    private Long userId;
+
     private Long itemId;
 
     private String type;
@@ -16,6 +18,14 @@ public class ItemParam extends CommonDomain {
     private String displayName;//文案名
 
     private Integer index;//排序
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getItemId() {
         return itemId;

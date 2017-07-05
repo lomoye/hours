@@ -4,6 +4,7 @@ package com.lomoye.hours.web.controller;
 
 import com.lomoye.common.dto.ResultList;
 import com.lomoye.hours.core.domain.ItemParam;
+import com.lomoye.hours.core.domain.User;
 import com.lomoye.hours.core.manager.ItemParamManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -33,7 +34,8 @@ public class ItemParamController extends BaseController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     ResultList<ItemParam> listItemParams(HttpServletRequest request, Long itemId) {
-        List<ItemParam> itemParams = itemParamManager.findByItemId(itemId);
+        User user = getSessionUser(request);
+        List<ItemParam> itemParams = itemParamManager.findByItemId(user.getId(), itemId);
         return new ResultList<>(itemParams);
     }
 }

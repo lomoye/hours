@@ -9,6 +9,8 @@ import java.util.Date;
  * 参数记录的值
  */
 public class ItemParamValue extends CommonDomain {
+    private Long userId;
+
     private Long itemRecordId;
 
     private Long itemParamId;
@@ -18,6 +20,14 @@ public class ItemParamValue extends CommonDomain {
     private String value;
 
     private Date day;//日期
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getItemRecordId() {
         return itemRecordId;

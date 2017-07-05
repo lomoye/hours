@@ -9,11 +9,21 @@ import java.util.List;
  * 项目类
  */
 public class Item extends CommonDomain {
+    private Long userId;
+
     private String name;//项目名
 
     private String desc;//描述
 
     private List<ItemParam> itemParams;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

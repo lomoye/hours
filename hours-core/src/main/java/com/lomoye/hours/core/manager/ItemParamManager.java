@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface ItemParamManager extends DomainManager<Long,ItemParam> {
-    List<ItemParam> findByItemId(Long itemId);
+    List<ItemParam> findByItemId(Long userId, Long itemId);
 }

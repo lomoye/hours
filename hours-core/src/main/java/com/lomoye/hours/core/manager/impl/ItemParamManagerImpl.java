@@ -29,9 +29,10 @@ public class ItemParamManagerImpl extends AbstractManager<ItemParam> implements 
     }
 
     @Override
-    public List<ItemParam> findByItemId(Long itemId) {
+    public List<ItemParam> findByItemId(Long userId, Long itemId) {
         Preconditions.checkArgument(itemId != null);
         ItemParam condition = new ItemParam();
+        condition.setUserId(userId);
         condition.setItemId(itemId);
         List<OrderCondition> orderConditions = new ArrayList<>();
         orderConditions.add(new OrderCondition("`index`", "asc"));

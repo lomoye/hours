@@ -1,5 +1,6 @@
 package com.lomoye.hours.core.manager.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.lomoye.common.dao.BasicMapper;
 import com.lomoye.common.dao.OrderCondition;
@@ -26,8 +27,10 @@ public class ItemManagerImpl extends AbstractManager<Item> implements ItemManage
     }
 
     @Override
-    public List<Item> listAll() {
+    public List<Item> listByUserId(Long userId) {
+        Preconditions.checkArgument(userId != null);
         Item condition = new Item();
+        condition.setUserId(userId);
         List<Item> items = listByCondition(condition, Lists.<OrderCondition>newArrayList());
         return nonEmptyList(items);
     }

@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface ItemManager extends DomainManager<Long, Item> {
-    List<Item> listAll();
+    List<Item> listByUserId(Long userId);
 }

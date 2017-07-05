@@ -36,13 +36,13 @@ public class ViewItemServiceImpl implements ViewItemService {
 
 
     @Override
-    public List<ItemRecordDto> listItemRecordDto(Long itemId) {
+    public List<ItemRecordDto> listItemRecordDto(Long userId, Long itemId) {
         Item item = itemManager.getById(itemId);
         if (item == null) {
             throw new BusinessException("20000", "项目不存在");
         }
 
-        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemIdOrderByDay(itemId);
+        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemIdOrderByDay(userId, itemId);
         if (CollectionUtils.isEmpty(itemParamValues)) {
             return new ArrayList<>();
         }
@@ -54,7 +54,7 @@ public class ViewItemServiceImpl implements ViewItemService {
             }
         }));
 
-        List<ItemParam> itemParams = itemParamManager.findByItemId(itemId);
+        List<ItemParam> itemParams = itemParamManager.findByItemId(userId, itemId);
 
         List<ItemRecordDto> dtos = new ArrayList<>();
         for (ItemParam itemParam : itemParams) {

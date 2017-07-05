@@ -10,7 +10,7 @@ import com.lomoye.hours.core.domain.ItemRecord;
  * 项目接口
  */
 public interface ItemService {
-    ItemRecord addItemRecord(ItemRecord itemRecord);
+    ItemRecord addItemRecord(Long userId, ItemRecord itemRecord);
 
-    Item addItem(Item item);
+    Item addItem(Long userId, Item item);
 }

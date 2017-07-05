@@ -30,17 +30,18 @@ public class ItemParamValueManagerImpl extends AbstractManager<ItemParamValue> i
     }
 
     @Override
-    public void deleteByItemRecordId(Long itemRecordId) {
-        Preconditions.checkArgument(itemRecordId != null);
+    public void deleteByItemRecordId(Long userId, Long itemRecordId) {
+        Preconditions.checkArgument(userId != null && itemRecordId != null);
         ItemParamValue condition = new ItemParamValue();
+        condition.setUserId(userId);
         condition.setItemRecordId(itemRecordId);
 
         mapper.deleteByCondition(condition);
     }
 
     @Override
-    public List<ItemParamValue> listByItemIdOrderByDay(Long itemId) {
-        Preconditions.checkArgument(itemId != null);
+    public List<ItemParamValue> listByItemIdOrderByDay(Long userId, Long itemId) {
+        Preconditions.checkArgument(userId != null && itemId != null);
         ItemParamValue condition = new ItemParamValue();
         condition.setItemId(itemId);
         return nonEmptyList(mapper.selectByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", "asc"))));
