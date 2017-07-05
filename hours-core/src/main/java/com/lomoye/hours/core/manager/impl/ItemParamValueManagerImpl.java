@@ -40,11 +40,11 @@ public class ItemParamValueManagerImpl extends AbstractManager<ItemParamValue> i
     }
 
     @Override
-    public List<ItemParamValue> listByItemIdOrderByDay(Long userId, Long itemId) {
+    public List<ItemParamValue> listByItemIdOrderByDay(Long userId, Long itemId, String orderBy) {
         Preconditions.checkArgument(userId != null && itemId != null);
         ItemParamValue condition = new ItemParamValue();
         condition.setItemId(itemId);
-        return nonEmptyList(mapper.selectByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", "asc"))));
+        return nonEmptyList(mapper.selectByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", orderBy))));
     }
 
 

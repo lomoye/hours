@@ -8,6 +8,7 @@ import com.lomoye.hours.core.domain.ItemRecord;
 import com.lomoye.hours.core.domain.User;
 import com.lomoye.hours.core.service.ItemService;
 import com.lomoye.hours.web.dto.ItemRecordDto;
+import com.lomoye.hours.web.dto.ItemRecordTableDto;
 import com.lomoye.hours.web.service.ViewItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -48,5 +49,13 @@ public class ItemRecordController extends BaseController {
     ResultList<ItemRecordDto> listItemRecordDto(HttpServletRequest request, Long itemId) {
         User user = getSessionUser(request);
         return new ResultList<>(viewItemService.listItemRecordDto(user.getId(), itemId));
+    }
+
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    @ResponseBody
+    ResultData<ItemRecordTableDto> report(HttpServletRequest request, Long itemId) {
+        User user = getSessionUser(request);
+        return new ResultData<>(viewItemService.reportItemRecord(user.getId(), itemId));
     }
 }

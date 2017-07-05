@@ -2,6 +2,7 @@ package com.lomoye.hours.web.service;
 
 
 import com.lomoye.hours.web.dto.ItemRecordDto;
+import com.lomoye.hours.web.dto.ItemRecordTableDto;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ import java.util.List;
  */
 public interface ViewItemService {
     List<ItemRecordDto> listItemRecordDto(Long userId, Long itemId);
+
+    ItemRecordTableDto reportItemRecord(Long userId, Long itemId);
 }

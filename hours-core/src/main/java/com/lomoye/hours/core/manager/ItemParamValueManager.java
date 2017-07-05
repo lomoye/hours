@@ -11,5 +11,5 @@ import java.util.List;
 public interface ItemParamValueManager extends DomainManager<Long,ItemParamValue> {
     void deleteByItemRecordId(Long userId, Long itemRecordId);
 
-    List<ItemParamValue> listByItemIdOrderByDay(Long userId, Long itemId);
+    List<ItemParamValue> listByItemIdOrderByDay(Long userId, Long itemId, String orderBy);
 }

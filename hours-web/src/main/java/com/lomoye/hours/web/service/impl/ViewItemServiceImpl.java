@@ -1,8 +1,10 @@
 package com.lomoye.hours.web.service.impl;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimaps;
 import com.lomoye.common.exception.BusinessException;
+import com.lomoye.common.util.DateUtil;
 import com.lomoye.hours.core.constant.ErrorCode;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemParam;
@@ -12,13 +14,16 @@ import com.lomoye.hours.core.manager.ItemManager;
 import com.lomoye.hours.core.manager.ItemParamManager;
 import com.lomoye.hours.core.manager.ItemParamValueManager;
 import com.lomoye.hours.web.dto.ItemRecordDto;
+import com.lomoye.hours.web.dto.ItemRecordTableDto;
 import com.lomoye.hours.web.service.ViewItemService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +48,7 @@ public class ViewItemServiceImpl implements ViewItemService {
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "项目不存在");
         }
 
-        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemIdOrderByDay(userId, itemId);
+        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemIdOrderByDay(userId, itemId, "asc");
         if (CollectionUtils.isEmpty(itemParamValues)) {
             return new ArrayList<>();
         }
@@ -68,5 +73,42 @@ public class ViewItemServiceImpl implements ViewItemService {
         }
 
         return dtos;
+    }
+
+    @Override
+    public ItemRecordTableDto reportItemRecord(Long userId, Long itemId) {
+        Item item = itemManager.getById(itemId);
+        if (item == null) {
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "项目不存在");
+        }
+
+        List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemIdOrderByDay(userId, itemId, "desc");
+        if (CollectionUtils.isEmpty(itemParamValues)) {
+            return null;
+        }
+
+        Map<String, List<ItemParamValue>> paramValueMap = Multimaps.asMap(Multimaps.index(itemParamValues, new Function<ItemParamValue, String>() {
+            @Override
+            public String apply(ItemParamValue input) {
+                return DateUtil.format(input.getDay(), "yyyy-MM-dd");
+            }
+        }));
+
+        List<ItemParam> itemParams = itemParamManager.findByItemId(userId, itemId);
+        ItemRecordTableDto itemRecordTableDto = new ItemRecordTableDto();
+        itemRecordTableDto.setItemParams(itemParams);
+
+        List<Map<String, String>> recordMaps = new ArrayList<>();
+        for (Map.Entry<String, List<ItemParamValue>> entry : paramValueMap.entrySet()) {
+            Map<String, String> recordMap = new HashMap<>();
+            recordMap.put("date", entry.getKey());//时间的key约定成date
+            for (ItemParamValue value : entry.getValue()) {
+                recordMap.put(value.getItemParamId().toString(), value.getValue());
+            }
+            recordMaps.add(recordMap);
+        }
+
+        itemRecordTableDto.setRecordMaps(recordMaps);
+        return itemRecordTableDto;
     }
 }
