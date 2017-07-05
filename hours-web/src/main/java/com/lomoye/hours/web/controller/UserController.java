@@ -48,7 +48,11 @@ public class UserController extends BaseController {
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "user can not null");
         }
         if (user.getMobile() == null && user.getNick() == null) {
-            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户名或者手机不能为空");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "手机号不能为空");
+        }
+
+        if (Strings.isNullOrEmpty(user.getPassword())) {
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "密码不能为空");
         }
 
         User selectUser = userManager.getByCondition(user);
