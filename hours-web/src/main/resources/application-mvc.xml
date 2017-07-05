@@ -30,6 +30,11 @@
     </mvc:annotation-driven>
     <bean id="jacksonObjectMapper" class="com.lomoye.common.serialization.JacksonObjectMapper"/>
 
+    <bean id="exceptionResolver"
+          class="com.lomoye.hours.web.common.ExceptionHandler">
+    </bean>
+
+
 
     <mvc:default-servlet-handler/>
     <mvc:view-controller path="/" view-name="redirect_home.jsp"/>

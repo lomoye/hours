@@ -3,6 +3,7 @@ package com.lomoye.hours.web.service.impl;
 import com.google.common.base.Function;
 import com.google.common.collect.Multimaps;
 import com.lomoye.common.exception.BusinessException;
+import com.lomoye.hours.core.constant.ErrorCode;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemParam;
 import com.lomoye.hours.core.domain.ItemParamValue;
@@ -39,7 +40,7 @@ public class ViewItemServiceImpl implements ViewItemService {
     public List<ItemRecordDto> listItemRecordDto(Long userId, Long itemId) {
         Item item = itemManager.getById(itemId);
         if (item == null) {
-            throw new BusinessException("20000", "项目不存在");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "项目不存在");
         }
 
         List<ItemParamValue> itemParamValues = itemParamValueManager.listByItemIdOrderByDay(userId, itemId);

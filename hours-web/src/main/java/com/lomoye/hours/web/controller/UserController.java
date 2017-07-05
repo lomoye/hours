@@ -53,7 +53,7 @@ public class UserController extends BaseController {
 
         User selectUser = userManager.getByCondition(user);
         if (selectUser == null) {
-            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户不存在");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户名或者密码错误");
         }
 
         //将用户放入session中

@@ -2,7 +2,6 @@ package com.lomoye.hours.web.filter;
 
 
 
-import com.lomoye.common.util.ServletUtil;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -17,7 +16,7 @@ import java.io.IOException;
  * 检查用户是否登录
  */
 public class HourSessionFilter implements Filter {
-    protected SessionManager sessionManager;
+    private SessionManager sessionManager;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
