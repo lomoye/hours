@@ -52,6 +52,7 @@ public class ItemParamController extends BaseController {
         for (ItemParam itemParam : itemParams) {
             itemParam.setIndex(index++);
             itemParam.setUserId(user.getId());
+            itemParam.setType("number");
             itemParamManager.save(itemParam);
         }
         return new ResultList<>(itemParams);
