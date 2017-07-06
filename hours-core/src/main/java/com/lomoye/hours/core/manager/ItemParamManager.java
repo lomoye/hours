@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ItemParamManager extends DomainManager<Long,ItemParam> {
     List<ItemParam> findByItemId(Long userId, Long itemId);
+
+    long countByItemId(Long userId, Long itemId);
 }
