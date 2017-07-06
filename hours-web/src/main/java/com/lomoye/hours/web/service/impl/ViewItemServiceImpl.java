@@ -109,6 +109,7 @@ public class ViewItemServiceImpl implements ViewItemService {
 
         List<ItemParam> itemParams = itemParamManager.findByItemId(userId, itemId);
         ItemRecordTableDto itemRecordTableDto = new ItemRecordTableDto();
+        itemRecordTableDto.setName(item.getName());
         itemRecordTableDto.setItemParams(itemParams);
 
         List<Map<String, String>> recordMaps = new ArrayList<>();
