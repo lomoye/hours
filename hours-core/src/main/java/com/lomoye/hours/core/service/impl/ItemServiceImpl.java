@@ -46,6 +46,8 @@ public class ItemServiceImpl implements ItemService {
         } else {
             itemRecord.setId(oldRecord.getId());
             itemRecord.setDay(oldRecord.getDay());
+            itemRecord.setUserId(oldRecord.getUserId());
+            itemRecordManager.update(itemRecord);
             updateItemParamValue(userId, itemRecord);
         }
 

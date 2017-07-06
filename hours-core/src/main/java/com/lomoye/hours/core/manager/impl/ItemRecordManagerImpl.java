@@ -43,4 +43,13 @@ public class ItemRecordManagerImpl extends AbstractManager<ItemRecord> implement
         return mapper.selectOne(condition);
     }
 
+    @Override
+    public List<ItemRecord> findByItemId(Long userId, Long itemId) {
+        Preconditions.checkArgument(userId != null && itemId != null);
+        ItemRecord condition = new ItemRecord();
+        condition.setUserId(userId);
+        condition.setItemId(itemId);
+        return nonEmptyList(mapper.selectByCondition(condition, Lists.<OrderCondition>newArrayList()));
+    }
+
 }

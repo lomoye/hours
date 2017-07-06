@@ -20,7 +20,7 @@
     </sql>
 
     <sql id="selectAllField">
-        select id,user_id,item_id,`day`,create_time,modify_time from item_record
+        select id,user_id,item_id,`day`,`desc`,create_time,modify_time from item_record
     </sql>
 
     <select id="selectWithPage" parameterType="Map" resultType="ItemRecord">
@@ -53,9 +53,9 @@
 
     <insert id="insert" keyProperty="id" parameterType="ItemRecord">
         insert into item_record
-        (user_id, item_id,`day`,create_time,modify_time)
+        (user_id, item_id,`day`,`desc`,create_time,modify_time)
         VALUES
-        (#{userId},#{itemId},#{day},#{createTime},#{modifyTime})
+        (#{userId},#{itemId},#{day},#{desc},#{createTime},#{modifyTime})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="ItemRecord">
@@ -63,6 +63,7 @@
         user_id=#{userId},
         item_id=#{itemId},
         `day`=#{day},
+        `desc`=#{desc},
         modify_time=#{modifyTime}
         where id=#{id}
     </update>

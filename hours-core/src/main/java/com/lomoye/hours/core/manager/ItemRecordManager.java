@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ItemRecordManager extends DomainManager<Long,ItemRecord> {
     ItemRecord findTodayItemRecord(Long userId, Long itemId);
+
+    List<ItemRecord> findByItemId(Long userId, Long itemId);
 }

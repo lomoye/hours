@@ -10,9 +10,11 @@ import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemParam;
 import com.lomoye.hours.core.domain.ItemParamValue;
 
+import com.lomoye.hours.core.domain.ItemRecord;
 import com.lomoye.hours.core.manager.ItemManager;
 import com.lomoye.hours.core.manager.ItemParamManager;
 import com.lomoye.hours.core.manager.ItemParamValueManager;
+import com.lomoye.hours.core.manager.ItemRecordManager;
 import com.lomoye.hours.web.dto.ItemRecordDto;
 import com.lomoye.hours.web.dto.ItemRecordTableDto;
 import com.lomoye.hours.web.service.ViewItemService;
@@ -39,6 +41,8 @@ public class ViewItemServiceImpl implements ViewItemService {
     private ItemParamManager itemParamManager;
     @Autowired
     private ItemParamValueManager itemParamValueManager;
+    @Autowired
+    private ItemRecordManager itemRecordManager;
 
 
     @Override
@@ -94,6 +98,15 @@ public class ViewItemServiceImpl implements ViewItemService {
             }
         }));
 
+        //common info
+        List<ItemRecord> itemRecords = itemRecordManager.findByItemId(userId, itemId);
+        Map<String, ItemRecord> itemRecordMap = Maps.uniqueIndex(itemRecords, new Function<ItemRecord, String>() {
+            @Override
+            public String apply(ItemRecord input) {
+                return DateUtil.format(input.getDay(), "yyyy-MM-dd");
+            }
+        });
+
         List<ItemParam> itemParams = itemParamManager.findByItemId(userId, itemId);
         ItemRecordTableDto itemRecordTableDto = new ItemRecordTableDto();
         itemRecordTableDto.setItemParams(itemParams);
@@ -102,9 +115,11 @@ public class ViewItemServiceImpl implements ViewItemService {
         for (Map.Entry<String, List<ItemParamValue>> entry : paramValueMap.entrySet()) {
             Map<String, String> recordMap = new HashMap<>();
             recordMap.put("date", entry.getKey());//时间的key约定成date
+            recordMap.put("desc", itemRecordMap.get(entry.getKey()).getDesc());
             for (ItemParamValue value : entry.getValue()) {
                 recordMap.put(value.getItemParamId().toString(), value.getValue());
             }
+
             recordMaps.add(recordMap);
         }
 

@@ -17,6 +17,8 @@ public class ItemRecord extends CommonDomain {
 
     private Date day;//日期
 
+    private String desc;//备注
+
     /**
      * 非持久化
      */
@@ -44,6 +46,14 @@ public class ItemRecord extends CommonDomain {
 
     public void setDay(Date day) {
         this.day = day;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public List<ItemParamValue> getItemParamValueList() {
