@@ -13,6 +13,8 @@ public class User extends CommonDomain {
 
     private String password;
 
+    private String icon;//头像
+
     public String getNick() {
         return nick;
     }
@@ -35,5 +37,13 @@ public class User extends CommonDomain {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

@@ -1,1 +1,1 @@
-ALTER TABLE item_record ADD COLUMN `desc` VARCHAR(1024) AFTER `day`;
+ALTER TABLE `user` ADD COLUMN icon VARCHAR(512) AFTER `password`;

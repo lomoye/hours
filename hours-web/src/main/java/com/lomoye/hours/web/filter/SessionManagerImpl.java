@@ -31,7 +31,7 @@ public class SessionManagerImpl implements SessionManager {
             return false;
         }
 
-        request.setAttribute(SessionConstant.USER, newestUser);
+        request.getSession().setAttribute(SessionConstant.USER, newestUser);
         return true;
     }
 }
