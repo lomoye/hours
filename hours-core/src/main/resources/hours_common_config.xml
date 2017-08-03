@@ -15,7 +15,8 @@
         <typeAlias alias="ItemParamValue" type="com.lomoye.hours.core.domain.ItemParamValue"/>
         <typeAlias alias="ItemRecord" type="com.lomoye.hours.core.domain.ItemRecord"/>
         <typeAlias alias="User" type="com.lomoye.hours.core.domain.User"/>
-
+        <typeAlias alias="CreditAccount" type="com.lomoye.hours.core.domain.CreditAccount"/>
+        <typeAlias alias="CreditAccount" type="com.lomoye.hours.core.domain.CreditAccountLog"/>
         <typeAlias alias="Article" type="com.lomoye.hours.core.domain.Article"/>
     </typeAliases>
 
@@ -26,7 +27,8 @@
         <mapper resource="com/lomoye/hours/core/dao/ItemParamValueMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ItemRecordMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/UserMapper.xml"/>
-
+        <mapper resource="com/lomoye/hours/core/dao/CreditAccountMapper.xml"/>
+        <mapper resource="com/lomoye/hours/core/dao/CreditAccountLogMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ArticleMapper.xml"/>
     </mappers>
 

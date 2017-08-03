@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lomoye.hours.core.dao.CreditAccountLogMapper">
+    <sql id="condition">
+        <where>
+
+        </where>
+    </sql>
+
+    <sql id="selectAllField">
+        select id,user_id,`day`,`type`,memo,content,before_credit,after_credit,create_time,modify_time
+         from credit_account_log
+    </sql>
+
+    <select id="selectWithPage" parameterType="Map" resultType="CreditAccountLog">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.lomoye.common.dao.paged"/>
+    </select>
+
+    <select id="selectByCondition" parameterType="Map" resultType="CreditAccountLog">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.lomoye.common.dao.orderby"/>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultType="CreditAccountLog">
+        <include refid="selectAllField"/>
+        where id=#{key}
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultType="CreditAccountLog">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        limit 1
+    </select>
+
+    <select id="selectCount" parameterType="Map" resultType="long">
+        select count(*) from credit_account_log
+        <include refid="condition"/>
+    </select>
+
+    <insert id="insert" keyProperty="id" parameterType="CreditAccountLog">
+        insert into credit_account_log
+        (user_id,`day`,`type`,memo,content,before_credit,after_credit,create_time,modify_time) 
+        VALUES
+        (#{userId},#{day},#{type},#{memo},#{content},#{beforeCredit},#{afterCredit},#{createTime},#{modifyTime}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="CreditAccountLog">
+        update credit_account_log set 
+        user_id=#{userId},
+        `day`=#{day},
+        `type`=#{type},
+        memo=#{memo},
+        content=#{content},
+        before_credit=#{beforeCredit},
+        after_credit=#{afterCredit},
+        modify_time=#{modifyTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from credit_account_log
+        where id = #{key}
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="Map">
+        delete from credit_account_log
+        <include refid="condition"/>
+    </delete>
+</mapper>
