@@ -16,7 +16,7 @@
         <typeAlias alias="ItemRecord" type="com.lomoye.hours.core.domain.ItemRecord"/>
         <typeAlias alias="User" type="com.lomoye.hours.core.domain.User"/>
         <typeAlias alias="CreditAccount" type="com.lomoye.hours.core.domain.CreditAccount"/>
-        <typeAlias alias="CreditAccount" type="com.lomoye.hours.core.domain.CreditAccountLog"/>
+        <typeAlias alias="CreditAccountLog" type="com.lomoye.hours.core.domain.CreditAccountLog"/>
         <typeAlias alias="Article" type="com.lomoye.hours.core.domain.Article"/>
     </typeAliases>
 
