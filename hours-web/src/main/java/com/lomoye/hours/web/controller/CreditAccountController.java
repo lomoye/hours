@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by lomoye on 2017/8/5.
- *
+ * CreditAccount
  */
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 @RequestMapping("/api/creditAccount")
-public class CreditAccountController extends BaseController  {
+public class CreditAccountController extends BaseController {
 
     @Autowired
     private CreditAccountManager creditAccountManager;
@@ -31,7 +31,7 @@ public class CreditAccountController extends BaseController  {
     @ResponseBody
     ResultData<CreditAccount> getCreditAccount(HttpServletRequest request) {
         User user = getSessionUser(request);
-        creditAccountManager.getOrCreateByUserId(user.getId());
-        return new ResultData<>();
+        CreditAccount creditAccount = creditAccountManager.getOrCreateByUserId(user.getId());
+        return new ResultData<>(creditAccount);
     }
 }
