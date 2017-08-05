@@ -71,7 +71,7 @@ public class CreditAccountServiceImpl implements CreditAccountService {
                     break;
                 }
             } catch (Throwable e) {
-                LOGGER.warn("saveCreditAccountLogUtilSuccess|userId={}|credit={}|type={}", creditAccountLog.getUserId());
+                LOGGER.warn("saveCreditAccountLogUtilSuccess|userId={}|type={}", creditAccountLog.getUserId(), creditAccountLog.getType());
                 ThreadUtil.safeSleep(1000L , "saveCreditAccountLogUtilSuccess");
             }
         }
