@@ -1,16 +1,14 @@
 package com.lomoye.hours.core.service.impl;
 
 import com.lomoye.common.util.DateUtil;
-import com.lomoye.hours.core.domain.Item;
-import com.lomoye.hours.core.domain.ItemParam;
-import com.lomoye.hours.core.domain.ItemParamValue;
-import com.lomoye.hours.core.domain.ItemRecord;
-import com.lomoye.hours.core.manager.ItemManager;
-import com.lomoye.hours.core.manager.ItemParamManager;
-import com.lomoye.hours.core.manager.ItemParamValueManager;
-import com.lomoye.hours.core.manager.ItemRecordManager;
+import com.lomoye.hours.core.domain.*;
+import com.lomoye.hours.core.enums.CreditAccountLogType;
+import com.lomoye.hours.core.manager.*;
+import com.lomoye.hours.core.service.CreditAccountService;
 import com.lomoye.hours.core.service.ItemService;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +23,9 @@ import java.util.List;
  */
 @Service
 public class ItemServiceImpl implements ItemService {
+
+    private Logger LOGGER = LoggerFactory.getLogger(CreditAccountServiceImpl.class);
+
     @Autowired
     private ItemRecordManager itemRecordManager;
     @Autowired
@@ -33,6 +34,10 @@ public class ItemServiceImpl implements ItemService {
     private ItemManager itemManager;
     @Autowired
     private ItemParamManager itemParamManager;
+    @Autowired
+    private CreditAccountService creditAccountService;
+    @Autowired
+    private CreditAccountLogManager creditAccountLogManager;
 
     @Override
     public ItemRecord addItemRecord(Long userId, ItemRecord itemRecord) {
@@ -51,8 +56,19 @@ public class ItemServiceImpl implements ItemService {
             updateItemParamValue(userId, itemRecord);
         }
 
-
+        addCreditUtilSuccess(userId, itemRecord);
         return itemRecord;
+    }
+
+    private void addCreditUtilSuccess(Long userId, ItemRecord itemRecord) {
+        //今天记录过了就没有奖励了，一天记录数据只奖励一次
+        long count = creditAccountLogManager.countByType(CreditAccountLogType.ITEM_RECORD, userId);
+        if (count > 0) {
+            LOGGER.warn("addCredit, but itemRecord count > 0|count={}", count);
+            return;
+        }
+
+        creditAccountService.addCreditUtilSuccess(userId, 1L, CreditAccountLogType.ITEM_RECORD, itemRecord.getId().toString());
     }
 
     @Override

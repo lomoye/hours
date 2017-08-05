@@ -71,4 +71,15 @@
         delete from credit_account
         <include refid="condition"/>
     </delete>
+
+
+
+    <update id="updateByPrimaryKeyWithVersion" parameterType="CreditAccount">
+        update credit_account set
+        credit=#{credit},
+        history_credit=#{historyCredit},
+        version=#{version} + 1,
+        modify_time=#{modifyTime}
+        where id=#{id} and version = #{version}
+    </update>
 </mapper>

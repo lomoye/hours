@@ -4,7 +4,18 @@
 <mapper namespace="com.lomoye.hours.core.dao.CreditAccountLogMapper">
     <sql id="condition">
         <where>
-
+            <if test="condition.id != null">
+                id = #{condition.id}
+            </if>
+            <if test="condition.userId != null">
+                AND user_id = #{condition.userId}
+            </if>
+            <if test="condition.type != null">
+                AND `type` = #{condition.type}
+            </if>
+            <if test="condition.day != null">
+                AND `day` = #{condition.day}
+            </if>
         </where>
     </sql>
 

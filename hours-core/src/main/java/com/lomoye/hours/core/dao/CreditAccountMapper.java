@@ -7,4 +7,5 @@ import com.lomoye.hours.core.domain.CreditAccount;
 
 @Repository
 public interface CreditAccountMapper extends PagedMapper<Long,CreditAccount> {
+    int updateByPrimaryKeyWithVersion(CreditAccount creditAccount);
 }
