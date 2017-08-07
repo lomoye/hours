@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 
     private void addCreditUtilSuccess(Long userId, ItemRecord itemRecord) {
         //今天记录过了就没有奖励了，一天记录数据只奖励一次
-        long count = creditAccountLogManager.countByType(CreditAccountLogType.ITEM_RECORD, userId);
+        long count = creditAccountLogManager.countTodayByType(CreditAccountLogType.ITEM_RECORD, userId);
         if (count > 0) {
             LOGGER.warn("addCredit, but itemRecord count > 0|count={}", count);
             return;

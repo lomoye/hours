@@ -5,5 +5,5 @@ import com.lomoye.hours.core.domain.CreditAccountLog;
 
 
 public interface CreditAccountLogManager extends DomainManager<Long,CreditAccountLog> {
-    long countByType(String type, Long userId);
+    long countTodayByType(String type, Long userId);
 }
