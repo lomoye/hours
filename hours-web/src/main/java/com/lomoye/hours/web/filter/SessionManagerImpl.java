@@ -2,11 +2,13 @@ package com.lomoye.hours.web.filter;
 
 import com.lomoye.hours.core.constant.SessionConstant;
 import com.lomoye.hours.core.domain.User;
+import com.lomoye.hours.core.encryption.CookieHelper;
 import com.lomoye.hours.core.manager.UserManager;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -22,6 +24,9 @@ public class SessionManagerImpl implements SessionManager {
 
     @Override
     public boolean checkLogin(HttpServletRequest request) {
+        String openId = CookieHelper.getCookie(request, "openId");
+        LOGGER.warn("openId={}", openId);
+
         User user = (User) request.getSession().getAttribute(SessionConstant.USER);
         if (user == null || user.getId() == null) {
             return false;
