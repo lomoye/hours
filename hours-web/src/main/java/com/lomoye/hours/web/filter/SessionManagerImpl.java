@@ -24,9 +24,6 @@ public class SessionManagerImpl implements SessionManager {
 
     @Override
     public boolean checkLogin(HttpServletRequest request) {
-        String openId = CookieHelper.getCookie(request, "openId");
-        LOGGER.warn("openId={}", openId);
-
         User user = (User) request.getSession().getAttribute(SessionConstant.USER);
         if (user == null || user.getId() == null) {
             return false;
