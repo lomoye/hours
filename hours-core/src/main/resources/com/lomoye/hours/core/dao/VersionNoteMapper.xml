@@ -1,0 +1,72 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lomoye.hours.core.dao.VersionNoteMapper">
+    <sql id="condition">
+        <where>
+            <if test="condition.id != null">
+                id = #{condition.id}
+            </if>
+            <if test="condition.day != null">
+                AND `day` = #{condition.day}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="selectAllField">
+        select id,content,`day`,create_time,modify_time from version_note
+    </sql>
+
+    <select id="selectWithPage" parameterType="Map" resultType="VersionNote">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.lomoye.common.dao.paged"/>
+    </select>
+
+    <select id="selectByCondition" parameterType="Map" resultType="VersionNote">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.lomoye.common.dao.orderby"/>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultType="VersionNote">
+        <include refid="selectAllField"/>
+        where id=#{key}
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultType="VersionNote">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        limit 1
+    </select>
+
+    <select id="selectCount" parameterType="Map" resultType="long">
+        select count(*) from version_note
+        <include refid="condition"/>
+    </select>
+
+    <insert id="insert" keyProperty="id" parameterType="VersionNote">
+        insert into version_note
+        (content,`day`,create_time,modify_time) 
+        VALUES
+        (#{content},#{day},#{createTime},#{modifyTime})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="VersionNote">
+        update version_note set 
+        content=#{content},
+        `day`=#{day},
+        modify_time=#{modifyTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from version_note
+        where id = #{key}
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="Map">
+        delete from version_note
+        <include refid="condition"/>
+    </delete>
+</mapper>
