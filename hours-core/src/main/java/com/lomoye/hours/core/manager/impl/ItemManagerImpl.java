@@ -31,7 +31,14 @@ public class ItemManagerImpl extends AbstractManager<Item> implements ItemManage
         Preconditions.checkArgument(userId != null);
         Item condition = new Item();
         condition.setUserId(userId);
+        condition.setIsDelete(0);
         List<Item> items = listByCondition(condition, Lists.<OrderCondition>newArrayList());
         return nonEmptyList(items);
+    }
+
+    @Override
+    public void logicallyDeleteById(Long id, Long userId) {
+        Preconditions.checkArgument(id != null && userId != null);
+        mapper.logicallyDeleteById(id, userId);
     }
 }

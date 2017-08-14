@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ItemManager extends DomainManager<Long, Item> {
     List<Item> listByUserId(Long userId);
+
+    void logicallyDeleteById(Long id, Long userId);
 }

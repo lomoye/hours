@@ -48,5 +48,13 @@ public class ItemController extends BaseController {
         return new ResultData<>(itemService.addItem(user.getId(), item));
     }
 
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    @ResponseBody
+    ResultData<Boolean> deleteItem(HttpServletRequest request, Long id) {
+        User user = getSessionUser(request);
+        itemManager.logicallyDeleteById(id, user.getId());
+        return new ResultData<>(true);
+    }
+
 
 }

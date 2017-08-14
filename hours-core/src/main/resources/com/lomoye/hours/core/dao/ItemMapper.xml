@@ -13,11 +13,14 @@
             <if test="condition.name != null">
                 AND `name` = #{condition.name}
             </if>
+            <if test="condition.isDelete != null">
+                AND `is_delete` = #{condition.isDelete}
+            </if>
         </where>
     </sql>
 
     <sql id="selectAllField">
-        select id,user_id,`name`,`desc`, create_time,modify_time from item
+        select id,user_id,`name`,`desc`,is_delete,create_time,modify_time from item
     </sql>
 
     <select id="selectWithPage" parameterType="Map" resultType="Item">
@@ -50,9 +53,9 @@
 
     <insert id="insert" keyProperty="id" parameterType="Item">
         insert into item
-        (user_id, `name`,`desc`, create_time,modify_time)
+        (user_id, `name`,`desc`, is_delete, create_time,modify_time)
         VALUES
-        (#{userId},#{name},#{desc},#{createTime},#{modifyTime})
+        (#{userId},#{name},#{desc},#{isDelete},#{createTime},#{modifyTime})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="Item">
@@ -60,6 +63,7 @@
         user_id=#{userId},
         `name`=#{name},
         `desc`=#{desc},
+        is_delete=#{isDelete},
         modify_time=#{modifyTime},
         modify_time=#{modifyTime}
         where id=#{id}
@@ -74,4 +78,11 @@
         delete from item
         <include refid="condition"/>
     </delete>
+
+
+    <update id="logicallyDeleteById" parameterType="Map">
+        UPDATE item SET
+        is_delete=1
+        WHERE id=#{id} AND user_id=#{userId}
+    </update>
 </mapper>

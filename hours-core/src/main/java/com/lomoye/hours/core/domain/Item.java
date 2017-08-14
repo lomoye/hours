@@ -15,6 +15,8 @@ public class Item extends CommonDomain {
 
     private String desc;//描述
 
+    private Integer isDelete;
+
     private List<ItemParam> itemParams;
 
     public Long getUserId() {
@@ -47,5 +49,13 @@ public class Item extends CommonDomain {
 
     public void setItemParams(List<ItemParam> itemParams) {
         this.itemParams = itemParams;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 }
