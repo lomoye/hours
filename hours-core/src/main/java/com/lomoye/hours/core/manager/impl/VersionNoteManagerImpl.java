@@ -31,6 +31,6 @@ public class VersionNoteManagerImpl extends AbstractManager<VersionNote> impleme
         Preconditions.checkArgument(userId != null);
         VersionNote condition = new VersionNote();
 
-        return listByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", "desc")));
+        return nonEmptyList(listByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", "desc"))));
     }
 }
