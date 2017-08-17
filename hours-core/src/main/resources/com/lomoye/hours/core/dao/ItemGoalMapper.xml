@@ -4,12 +4,20 @@
 <mapper namespace="com.lomoye.hours.core.dao.ItemGoalMapper">
     <sql id="condition">
         <where>
-
+            <if test="condition.id != null">
+                id = #{condition.id}
+            </if>
+            <if test="condition.userId != null">
+                AND user_id = #{condition.userId}
+            </if>
+            <if test="condition.status != null">
+                AND `status` = #{condition.status}
+            </if>
         </where>
     </sql>
 
     <sql id="selectAllField">
-        select id,user_id,start_time,end_time,credit_rate,create_time,modify_time from item_goal
+        select id,user_id,start_time,end_time,credit_rate,`status`,create_time,modify_time from item_goal
     </sql>
 
     <select id="selectWithPage" parameterType="Map" resultType="ItemGoal">
@@ -42,9 +50,9 @@
 
     <insert id="insert" keyProperty="id" parameterType="ItemGoal">
         insert into item_goal
-        (user_id,start_time,end_time,credit_rate,create_time,modify_time) 
+        (user_id,start_time,end_time,credit_rate,`status`,create_time,modify_time) 
         VALUES
-        (#{userId},#{startTime},#{endTime},#{creditRate},#{createTime},#{modifyTime})
+        (#{userId},#{startTime},#{endTime},#{creditRate},#{status},#{createTime},#{modifyTime})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="ItemGoal">
@@ -53,6 +61,7 @@
         start_time=#{startTime},
         end_time=#{endTime},
         credit_rate=#{creditRate},
+        `status`=#{status},
         modify_time=#{modifyTime}
         where id=#{id}
     </update>

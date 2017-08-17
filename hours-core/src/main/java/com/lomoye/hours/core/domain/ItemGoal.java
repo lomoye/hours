@@ -19,6 +19,8 @@ public class ItemGoal extends CommonDomain {
 
     private Long creditRate;//倍率 每改变1,增加多少积分.
 
+    private String status;//目标的状态
+
     public Long getUserId() {
         return userId;
     }
@@ -57,5 +59,13 @@ public class ItemGoal extends CommonDomain {
 
     public void setCreditRate(Long creditRate) {
         this.creditRate = creditRate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

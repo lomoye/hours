@@ -19,6 +19,7 @@
         <typeAlias alias="CreditAccountLog" type="com.lomoye.hours.core.domain.CreditAccountLog"/>
         <typeAlias alias="Article" type="com.lomoye.hours.core.domain.Article"/>
         <typeAlias alias="VersionNote" type="com.lomoye.hours.core.domain.VersionNote"/>
+        <typeAlias alias="VersionNote" type="com.lomoye.hours.core.domain.ItemGoal"/>
     </typeAliases>
 
     <mappers>
@@ -32,6 +33,7 @@
         <mapper resource="com/lomoye/hours/core/dao/CreditAccountLogMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ArticleMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/VersionNoteMapper.xml"/>
+        <mapper resource="com/lomoye/hours/core/dao/ItemGoalMapper.xml"/>
     </mappers>
 
 </configuration>
