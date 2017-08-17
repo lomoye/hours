@@ -19,7 +19,7 @@
         <typeAlias alias="CreditAccountLog" type="com.lomoye.hours.core.domain.CreditAccountLog"/>
         <typeAlias alias="Article" type="com.lomoye.hours.core.domain.Article"/>
         <typeAlias alias="VersionNote" type="com.lomoye.hours.core.domain.VersionNote"/>
-        <typeAlias alias="VersionNote" type="com.lomoye.hours.core.domain.ItemGoal"/>
+        <typeAlias alias="ItemGoal" type="com.lomoye.hours.core.domain.ItemGoal"/>
     </typeAliases>
 
     <mappers>
