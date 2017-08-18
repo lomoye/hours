@@ -10,14 +10,15 @@
             <if test="condition.userId != null">
                 AND user_id = #{condition.userId}
             </if>
-            <if test="condition.status != null">
+            <if test="condition.status!= null">
                 AND `status` = #{condition.status}
             </if>
         </where>
     </sql>
 
     <sql id="selectAllField">
-        select id,user_id,start_time,end_time,credit_rate,`status`,create_time,modify_time from item_goal
+        select id,user_id,item_id,start_time,end_time,goal_num,credit_rate,`status`,create_time,modify_time
+         from item_goal
     </sql>
 
     <select id="selectWithPage" parameterType="Map" resultType="ItemGoal">
@@ -50,16 +51,19 @@
 
     <insert id="insert" keyProperty="id" parameterType="ItemGoal">
         insert into item_goal
-        (user_id,start_time,end_time,credit_rate,`status`,create_time,modify_time) 
+        (user_id,item_id,start_time,end_time,goal_num,credit_rate,`status`,create_time,modify_time) 
         VALUES
-        (#{userId},#{startTime},#{endTime},#{creditRate},#{status},#{createTime},#{modifyTime})
+        (#{userId},#{itemId},#{startTime},#{endTime},#{goalNum},#{creditRate},#{status},#{createTime},
+        #{modifyTime})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="ItemGoal">
         update item_goal set 
         user_id=#{userId},
+        item_id=#{itemId},
         start_time=#{startTime},
         end_time=#{endTime},
+        goal_num=#{goalNum},
         credit_rate=#{creditRate},
         `status`=#{status},
         modify_time=#{modifyTime}

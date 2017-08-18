@@ -11,15 +11,18 @@ import java.util.Date;
 public class ItemGoal extends CommonDomain {
     private Long userId;
 
+    private Long itemId;
+
     private Date startTime;
 
     private Date endTime;
 
-    private String target;//目标值
+    private String goalNum;//目标值
 
-    private Long creditRate;//倍率 每改变1,增加多少积分.
+    private Long creditRate;//倍率 每改变0.1,增加多少积分.
 
     private String status;//目标的状态
+
 
     public Long getUserId() {
         return userId;
@@ -27,6 +30,14 @@ public class ItemGoal extends CommonDomain {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public Date getStartTime() {
@@ -45,12 +56,12 @@ public class ItemGoal extends CommonDomain {
         this.endTime = endTime;
     }
 
-    public String getTarget() {
-        return target;
+    public String getGoalNum() {
+        return goalNum;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setGoalNum(String goalNum) {
+        this.goalNum = goalNum;
     }
 
     public Long getCreditRate() {
