@@ -6,6 +6,7 @@ import com.lomoye.common.dao.BasicMapper;
 import com.lomoye.common.dao.OrderCondition;
 import com.lomoye.hours.core.dao.ItemGoalMapper;
 import com.lomoye.hours.core.domain.ItemGoal;
+import com.lomoye.hours.core.enums.ItemGoalStatus;
 import com.lomoye.hours.core.manager.ItemGoalManager;
 import com.lomoye.common.manager.AbstractManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,12 @@ public class ItemGoalManagerImpl extends AbstractManager<ItemGoal> implements It
         ItemGoal condition = new ItemGoal();
 
         return nonEmptyList(listByCondition(condition, new ArrayList<OrderCondition>()));
+    }
+
+    @Override
+    public List<ItemGoal> getAllStartGoal() {
+        ItemGoal condition = new ItemGoal();
+        condition.setStatus(ItemGoalStatus.START);
+        return listByCondition(condition, new ArrayList<OrderCondition>());
     }
 }

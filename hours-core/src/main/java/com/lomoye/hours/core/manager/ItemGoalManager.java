@@ -10,4 +10,6 @@ public interface ItemGoalManager extends DomainManager<Long,ItemGoal> {
     long countItemGoal(String status, Long userId);
 
     List<ItemGoal> listAllItemGoal(Long userId);
+
+    List<ItemGoal> getAllStartGoal();
 }

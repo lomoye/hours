@@ -3,13 +3,16 @@ package com.lomoye.hours.web.controller;
 import com.lomoye.common.dto.ResultData;
 import com.lomoye.common.dto.ResultList;
 import com.lomoye.common.exception.BusinessException;
+import com.lomoye.common.util.DateUtil;
 import com.lomoye.hours.core.constant.ErrorCode;
 import com.lomoye.hours.core.domain.Item;
 import com.lomoye.hours.core.domain.ItemGoal;
+import com.lomoye.hours.core.domain.ItemRecord;
 import com.lomoye.hours.core.domain.User;
 import com.lomoye.hours.core.enums.ItemGoalStatus;
 import com.lomoye.hours.core.manager.ItemGoalManager;
 import com.lomoye.hours.core.manager.ItemManager;
+import com.lomoye.hours.core.manager.ItemRecordManager;
 import com.lomoye.hours.web.dto.ItemGoalDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -38,6 +41,8 @@ public class ItemGoalController extends BaseController {
     private ItemGoalManager itemGoalManager;
     @Autowired
     private ItemManager itemManager;
+    @Autowired
+    private ItemRecordManager itemrecordManager;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
@@ -50,8 +55,14 @@ public class ItemGoalController extends BaseController {
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "你已有一个进行中的目标,请等该目标完成后再创建新的目标");
         }
 
+        ItemRecord todayItemRecord = itemrecordManager.findTodayItemRecord(user.getId(), itemGoal.getItemId());
+        if (todayItemRecord == null) {
+            LOGGER.info("you today have no record,please record one|userId={}", user.getId());
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "你今天还没有该项目的数据记录，请先去记录一条数据吧");
+        }
+
         itemGoal.setUserId(user.getId());
-        itemGoal.setStartTime(new Date());
+        itemGoal.setStartTime(DateUtil.getDailyStartTime(new Date()));
         itemGoal.setStatus(ItemGoalStatus.START);
         itemGoalManager.save(itemGoal);
         return new ResultData<>(itemGoal);

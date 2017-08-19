@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="statisticsJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="itemGoalClearServiceImpl"/>
+        <property name="targetMethod" value="clearItemGoal"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <!-- ======================== trigger ======================== -->
+    <bean id="statisticsTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="statisticsJobMethod"/>
+        <property name="cronExpression" value="0 0 9 * * ?"/>
+    </bean>
+
+    <!-- ======================== scheduler ======================== -->
+    <bean id="springJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="statisticsTriggerBean"/>
+            </list>
+        </property>
+    </bean>
+</beans>
