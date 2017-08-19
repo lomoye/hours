@@ -4,11 +4,14 @@ package com.lomoye.hours.backend.service.impl;
 import com.lomoye.common.util.DateUtil;
 import com.lomoye.common.util.SerializationUtil;
 import com.lomoye.hours.backend.service.ItemGoalClearService;
+import com.lomoye.hours.core.domain.CreditAccount;
 import com.lomoye.hours.core.domain.ItemGoal;
 import com.lomoye.hours.core.domain.ItemParamValue;
+import com.lomoye.hours.core.enums.CreditAccountLogType;
 import com.lomoye.hours.core.enums.ItemGoalStatus;
 import com.lomoye.hours.core.manager.ItemGoalManager;
 import com.lomoye.hours.core.manager.ItemParamValueManager;
+import com.lomoye.hours.core.service.CreditAccountService;
 import org.apache.commons.collections.CollectionUtils;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.PersistJobDataAfterExecution;
@@ -34,6 +37,8 @@ public class ItemGoalClearServiceImpl implements ItemGoalClearService {
     private ItemGoalManager itemGoalManager;
     @Autowired
     private ItemParamValueManager itemParamValueManager;
+    @Autowired
+    private CreditAccountService creditAccountService;
 
     @Override
     public void clearItemGoal() {
@@ -49,6 +54,43 @@ public class ItemGoalClearServiceImpl implements ItemGoalClearService {
 
     private void doClearItemGoal(ItemGoal itemGoal) {
         checkItemGoal(itemGoal);
+
+        ItemParamValue startValue = itemParamValueManager.findByDay(itemGoal.getStartTime(), itemGoal.getUserId(), itemGoal.getItemId(), itemGoal.getItemParamId());
+
+        if (startValue == null) {
+            LOGGER.warn("startValue not exist|itemGoalId={}", itemGoal.getId());
+            return;
+        }
+
+        ItemParamValue endValue = itemParamValueManager.findByDay(itemGoal.getEndTime(), itemGoal.getUserId(), itemGoal.getItemId(), itemGoal.getItemParamId());
+        if (endValue == null) {
+            LOGGER.warn("endValue not exist, please add|itemGoalId={}", itemGoal.getId());
+            return;
+        }
+
+        compute(startValue, endValue, itemGoal);
+    }
+
+    private void compute(ItemParamValue startValue, ItemParamValue endValue, ItemGoal itemGoal) {
+        BigDecimal sv = new BigDecimal(startValue.getValue());
+        BigDecimal ev = new BigDecimal(endValue.getValue());
+        BigDecimal gv = new BigDecimal(itemGoal.getGoalNum());
+
+        LOGGER.info("compute|sv={}|ev={}|gv={}|itemGoalId={}", itemGoal.getId());
+        //TODO 这里业务逻辑有缺陷 不一定大于0才是对的 但对于记录体重来说没错 先这样吧 以后再改
+        if (ev.subtract(gv).doubleValue() > 0) {
+            LOGGER.info("you have not finish the goal|id={}", itemGoal.getId());
+            itemGoal.setStatus(ItemGoalStatus.FAILED);
+            itemGoalManager.update(itemGoal);
+            return;
+        }
+
+        Long credit = sv.subtract(ev).multiply(new BigDecimal(itemGoal.getCreditRate())).multiply(new BigDecimal(10)).longValue();
+        //增加积分
+        creditAccountService.addCreditUtilSuccess(itemGoal.getUserId(), credit, CreditAccountLogType.ITEM_GOAL, itemGoal.getId().toString());
+        //更新目标状态
+        itemGoal.setStatus(ItemGoalStatus.SUCCESS);
+        itemGoalManager.update(itemGoal);
     }
 
     private void checkItemGoal(ItemGoal itemGoal) {
@@ -59,7 +101,7 @@ public class ItemGoalClearServiceImpl implements ItemGoalClearService {
         }
 
         if (!ItemGoalStatus.START.equals(itemGoal.getStatus())) {
-            LOGGER.warn("status not start! big warning..|itemGoalId={}", itemGoal.getId());
+            LOGGER.info("status not start! big warning..|itemGoalId={}", itemGoal.getId());
             return;
         }
 

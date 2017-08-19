@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.lomoye.common.dao.BasicMapper;
 import com.lomoye.common.dao.OrderCondition;
 import com.lomoye.common.manager.AbstractManager;
+import com.lomoye.common.util.DateUtil;
 import com.lomoye.hours.core.dao.ItemParamValueMapper;
 import com.lomoye.hours.core.domain.ItemParamValue;
 import com.lomoye.hours.core.manager.ItemParamValueManager;
@@ -14,6 +15,7 @@ import com.lomoye.hours.core.manager.ItemParamValueManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -45,6 +47,19 @@ public class ItemParamValueManagerImpl extends AbstractManager<ItemParamValue> i
         ItemParamValue condition = new ItemParamValue();
         condition.setItemId(itemId);
         return nonEmptyList(mapper.selectByCondition(condition, Lists.newArrayList(new OrderCondition("`day`", orderBy))));
+    }
+
+    @Override
+    public ItemParamValue findByDay(Date startTime, Long userId, Long itemId, Long itemParamId) {
+        Preconditions.checkArgument(startTime != null && userId != null && itemId != null && itemParamId != null);
+
+        ItemParamValue condition = new ItemParamValue();
+        condition.setDay(DateUtil.getDailyStartTime(startTime));
+        condition.setUserId(userId);
+        condition.setItemId(itemId);
+        condition.setItemParamId(itemParamId);
+
+        return getByCondition(condition);
     }
 
 
