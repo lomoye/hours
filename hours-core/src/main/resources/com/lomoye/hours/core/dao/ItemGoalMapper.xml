@@ -17,7 +17,7 @@
     </sql>
 
     <sql id="selectAllField">
-        select id,user_id,item_id,start_time,end_time,goal_num,credit_rate,`status`,create_time,modify_time
+        select id,user_id,item_id,item_param_id,start_time,end_time,goal_num,credit_rate,`status`,create_time,modify_time
          from item_goal
     </sql>
 
@@ -51,9 +51,9 @@
 
     <insert id="insert" keyProperty="id" parameterType="ItemGoal">
         insert into item_goal
-        (user_id,item_id,start_time,end_time,goal_num,credit_rate,`status`,create_time,modify_time) 
+        (user_id,item_id,item_param_id,start_time,end_time,goal_num,credit_rate,`status`,create_time,modify_time)
         VALUES
-        (#{userId},#{itemId},#{startTime},#{endTime},#{goalNum},#{creditRate},#{status},#{createTime},
+        (#{userId},#{itemId},#{itemParamId},#{startTime},#{endTime},#{goalNum},#{creditRate},#{status},#{createTime},
         #{modifyTime})
     </insert>
 
@@ -61,6 +61,7 @@
         update item_goal set 
         user_id=#{userId},
         item_id=#{itemId},
+        item_param_id=#{itemParamId},
         start_time=#{startTime},
         end_time=#{endTime},
         goal_num=#{goalNum},

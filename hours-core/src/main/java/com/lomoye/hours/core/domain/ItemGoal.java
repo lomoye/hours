@@ -13,6 +13,8 @@ public class ItemGoal extends CommonDomain {
 
     private Long itemId;
 
+    private Long itemParamId;
+
     private Date startTime;
 
     private Date endTime;
@@ -38,6 +40,14 @@ public class ItemGoal extends CommonDomain {
 
     public void setItemId(Long itemId) {
         this.itemId = itemId;
+    }
+
+    public Long getItemParamId() {
+        return itemParamId;
+    }
+
+    public void setItemParamId(Long itemParamId) {
+        this.itemParamId = itemParamId;
     }
 
     public Date getStartTime() {
