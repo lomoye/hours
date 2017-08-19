@@ -14,5 +14,5 @@ public interface ItemParamValueManager extends DomainManager<Long,ItemParamValue
 
     List<ItemParamValue> listByItemIdOrderByDay(Long userId, Long itemId, String orderBy);
 
-    ItemParamValue findByDay(Date startTime, Long userId, Long itemId, Long itemParamId);
+    ItemParamValue findByDay(Date day, Long userId, Long itemId, Long itemParamId);
 }

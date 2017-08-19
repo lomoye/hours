@@ -53,7 +53,9 @@ public class ItemGoalClearServiceImpl implements ItemGoalClearService {
     }
 
     private void doClearItemGoal(ItemGoal itemGoal) {
-        checkItemGoal(itemGoal);
+        if (!checkItemGoal(itemGoal)) {
+            return;
+        }
 
         ItemParamValue startValue = itemParamValueManager.findByDay(itemGoal.getStartTime(), itemGoal.getUserId(), itemGoal.getItemId(), itemGoal.getItemParamId());
 
@@ -93,18 +95,19 @@ public class ItemGoalClearServiceImpl implements ItemGoalClearService {
         itemGoalManager.update(itemGoal);
     }
 
-    private void checkItemGoal(ItemGoal itemGoal) {
+    private boolean checkItemGoal(ItemGoal itemGoal) {
         LOGGER.info("start clearItemGoal|itemGoal={}", SerializationUtil.gson2String(itemGoal));
         if (itemGoal.getEndTime().after(new Date())) {
             LOGGER.info("this goal not end , return|itemGoal={}", SerializationUtil.gson2String(itemGoal));
-            return;
+            return false;
         }
 
         if (!ItemGoalStatus.START.equals(itemGoal.getStatus())) {
             LOGGER.info("status not start! big warning..|itemGoalId={}", itemGoal.getId());
-            return;
+            return false;
         }
 
         LOGGER.info("start clear endTimed goal|itemGoalId={}", itemGoal.getId());
+        return true;
     }
 }

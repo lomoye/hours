@@ -2,7 +2,6 @@ package com.lomoye.hours.core.manager.impl;
 
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.lomoye.common.dao.BasicMapper;
 import com.lomoye.common.dao.OrderCondition;
@@ -50,11 +49,11 @@ public class ItemParamValueManagerImpl extends AbstractManager<ItemParamValue> i
     }
 
     @Override
-    public ItemParamValue findByDay(Date startTime, Long userId, Long itemId, Long itemParamId) {
-        Preconditions.checkArgument(startTime != null && userId != null && itemId != null && itemParamId != null);
+    public ItemParamValue findByDay(Date day, Long userId, Long itemId, Long itemParamId) {
+        Preconditions.checkArgument(day != null && userId != null && itemId != null && itemParamId != null);
 
         ItemParamValue condition = new ItemParamValue();
-        condition.setDay(DateUtil.getDailyStartTime(startTime));
+        condition.setDay(DateUtil.getDailyStartTime(day));
         condition.setUserId(userId);
         condition.setItemId(itemId);
         condition.setItemParamId(itemParamId);
