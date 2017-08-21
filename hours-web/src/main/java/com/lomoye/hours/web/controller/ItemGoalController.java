@@ -73,7 +73,7 @@ public class ItemGoalController extends BaseController {
     @ResponseBody
     ResultList<ItemGoalDto> listItemGoal(HttpServletRequest request) {
         User user = getSessionUser(request);
-        List<ItemGoal> itemGoals = itemGoalManager.listAllItemGoal(user.getId());
+        List<ItemGoal> itemGoals = itemGoalManager.listAllItemGoalOfUser(user.getId());
         List<ItemGoalDto> dtos = new ArrayList<>();
         for (ItemGoal itemGoal : itemGoals) {
             ItemGoalDto dto = new ItemGoalDto();

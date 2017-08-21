@@ -38,10 +38,10 @@ public class ItemGoalManagerImpl extends AbstractManager<ItemGoal> implements It
     }
 
     @Override
-    public List<ItemGoal> listAllItemGoal(Long userId) {
+    public List<ItemGoal> listAllItemGoalOfUser(Long userId) {
         Preconditions.checkArgument(userId != null);
         ItemGoal condition = new ItemGoal();
-
+        condition.setUserId(userId);
         return nonEmptyList(listByCondition(condition, new ArrayList<OrderCondition>()));
     }
 
