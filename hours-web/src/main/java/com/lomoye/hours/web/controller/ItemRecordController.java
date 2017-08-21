@@ -44,6 +44,14 @@ public class ItemRecordController extends BaseController {
         return new ResultData<>(itemService.addItemRecord(user.getId(), itemRecord));
     }
 
+    //弥补记录
+    @RequestMapping(value = "/makeup", method = RequestMethod.POST)
+    @ResponseBody
+    ResultData<ItemRecord> makeupItemRecord(HttpServletRequest request, @RequestBody ItemRecord itemRecord) {
+        User user = getSessionUser(request);
+        return new ResultData<>(itemService.makeupItemRecord(user.getId(), itemRecord));
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     ResultList<ItemRecordDto> listItemRecordDto(HttpServletRequest request, Long itemId) {

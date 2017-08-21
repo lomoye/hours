@@ -1,6 +1,8 @@
 package com.lomoye.hours.core.service.impl;
 
+import com.lomoye.common.exception.BusinessException;
 import com.lomoye.common.util.DateUtil;
+import com.lomoye.hours.core.constant.ErrorCode;
 import com.lomoye.hours.core.domain.*;
 import com.lomoye.hours.core.enums.CreditAccountLogType;
 import com.lomoye.hours.core.manager.*;
@@ -89,6 +91,23 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return item;
+    }
+
+    @Override
+    public ItemRecord makeupItemRecord(Long userId, ItemRecord itemRecord) {
+        itemRecord.setUserId(userId);
+        itemRecord.setDay(DateUtil.getDailyStartTime(itemRecord.getDay()));
+
+        ItemRecord oldRecord = itemRecordManager.findSomeDayItemRecord(userId, itemRecord.getItemId(), itemRecord.getDay());
+        if (oldRecord != null) {
+            LOGGER.info("no need make up, already has record|userId={}|day={}", itemRecord.getDay());
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "这一天已经有记录了，无需弥补记录");
+        }
+
+        itemRecordManager.save(itemRecord);
+        saveItemParamValue(userId, itemRecord);
+
+        return itemRecord;
     }
 
 

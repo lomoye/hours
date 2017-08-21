@@ -13,4 +13,6 @@ public interface ItemService {
     ItemRecord addItemRecord(Long userId, ItemRecord itemRecord);
 
     Item addItem(Long userId, Item item);
+
+    ItemRecord makeupItemRecord(Long userId, ItemRecord itemRecord);//弥补记录
 }

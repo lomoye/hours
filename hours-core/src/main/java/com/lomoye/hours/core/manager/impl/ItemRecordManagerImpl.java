@@ -35,6 +35,15 @@ public class ItemRecordManagerImpl extends AbstractManager<ItemRecord> implement
         Preconditions.checkArgument(userId != null && itemId != null);
         Date day = DateUtil.getDailyStartTime(new Date());
 
+        return findSomeDayItemRecord(userId, itemId, day);
+    }
+
+    @Override
+    public ItemRecord findSomeDayItemRecord(Long userId, Long itemId, Date day) {
+        Preconditions.checkArgument(userId != null && itemId != null && day != null);
+
+        day = DateUtil.getDailyStartTime(day);
+
         ItemRecord condition = new ItemRecord();
         condition.setUserId(userId);
         condition.setDay(day);
