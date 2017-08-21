@@ -40,15 +40,14 @@ public class ItemGoalClearServiceImpl implements ItemGoalClearService {
 
     @Override
     public void clearItemGoal() {
-        LOGGER.warn("启动测试一波？");
-        /*List<ItemGoal> itemGoals = itemGoalManager.getAllStartGoal();
+        List<ItemGoal> itemGoals = itemGoalManager.getAllStartGoal();
         if (CollectionUtils.isEmpty(itemGoals)) {
             return;
         }
 
         for (ItemGoal itemGoal : itemGoals) {
             doClearItemGoal(itemGoal);
-        }*/
+        }
     }
 
     private void doClearItemGoal(ItemGoal itemGoal) {
