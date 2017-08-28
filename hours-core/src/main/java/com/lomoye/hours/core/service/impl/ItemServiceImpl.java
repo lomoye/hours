@@ -76,6 +76,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item addItem(Long userId, Item item) {
         item.setUserId(userId);
+        item.setIsDelete(0);
         itemManager.save(item);
 
         List<ItemParam> itemParams = item.getItemParams();
