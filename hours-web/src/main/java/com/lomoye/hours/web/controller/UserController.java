@@ -13,6 +13,7 @@ import com.lomoye.hours.core.domain.User;
 import com.lomoye.hours.core.manager.UserManager;
 
 
+import com.lomoye.hours.core.util.MobileCheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -47,22 +48,49 @@ public class UserController extends BaseController {
         return new ResultData<>(user);
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
+    ResultData<Void> registerUser(HttpServletRequest request, @RequestBody User user) {
+        if (user == null) {
+            LOGGER.info("registerUser|no user");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户不能为空");
+        }
+        if (Strings.isNullOrEmpty(user.getMobile())) {
+            LOGGER.info("registerUser|no mobile");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "手机号不能为空");
+        }
+        if (!MobileCheckUtil.isEffectivePhone(user.getMobile())) {
+            LOGGER.info("registerUser|invalid mobile={}", user.getMobile());
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "手机号格式不正确");
+        }
+        if (Strings.isNullOrEmpty(user.getNick())) {
+            LOGGER.info("registerUser|no nick");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "昵称不能为空");
+        }
+        userManager.save(user);
+        return new ResultData<>();
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     ResultData<User> userLogin(HttpServletRequest request, @RequestBody User user) {
         if (user == null) {
-            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "user can not null");
+            LOGGER.info("userLogin|no user");
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户不能为空");
         }
         if (user.getMobile() == null && user.getNick() == null) {
+            LOGGER.info("userLogin|no mobile");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "手机号不能为空");
         }
 
         if (Strings.isNullOrEmpty(user.getPassword())) {
+            LOGGER.info("userLogin|no password");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "密码不能为空");
         }
 
         User selectUser = userManager.getByCondition(user);
         if (selectUser == null) {
+            LOGGER.info("userLogin|no selectUser");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户名或者密码错误");
         }
 
