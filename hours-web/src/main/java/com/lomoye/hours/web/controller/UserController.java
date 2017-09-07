@@ -69,6 +69,10 @@ public class UserController extends BaseController {
         }
 
         User selectUser = userManager.findByMobile(user.getMobile());
+        if (selectUser != null) {
+            LOGGER.warn("selectUser is exist|mobile={}", selectUser.getMobile());
+            throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "该手机号已被注册");
+        }
 
         userManager.save(user);
         return new ResultData<>();
