@@ -67,6 +67,9 @@ public class UserController extends BaseController {
             LOGGER.info("registerUser|no nick");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "昵称不能为空");
         }
+
+        User selectUser = userManager.findByMobile(user.getMobile());
+
         userManager.save(user);
         return new ResultData<>();
     }
@@ -78,7 +81,7 @@ public class UserController extends BaseController {
             LOGGER.info("userLogin|no user");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户不能为空");
         }
-        if (user.getMobile() == null && user.getNick() == null) {
+        if (user.getMobile() == null) {
             LOGGER.info("userLogin|no mobile");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "手机号不能为空");
         }
@@ -88,7 +91,7 @@ public class UserController extends BaseController {
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "密码不能为空");
         }
 
-        User selectUser = userManager.getByCondition(user);
+        User selectUser = userManager.findByMobileAndPassword(user.getMobile(), user.getPassword());
         if (selectUser == null) {
             LOGGER.info("userLogin|no selectUser");
             throw new BusinessException(ErrorCode.PARAMETER_IS_ILLEGAL, "用户名或者密码错误");
