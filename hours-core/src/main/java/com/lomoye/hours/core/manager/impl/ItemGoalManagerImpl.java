@@ -45,7 +45,7 @@ public class ItemGoalManagerImpl extends AbstractManager<ItemGoal> implements It
 
         List<OrderCondition> orderConditions = new ArrayList<>();
         orderConditions.add(new OrderCondition("create_time", "desc"));
-        return nonEmptyList(listByCondition(condition, orderConditions);
+        return nonEmptyList(listByCondition(condition, orderConditions));
     }
 
     @Override
