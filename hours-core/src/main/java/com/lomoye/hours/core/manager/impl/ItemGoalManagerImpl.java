@@ -42,7 +42,10 @@ public class ItemGoalManagerImpl extends AbstractManager<ItemGoal> implements It
         Preconditions.checkArgument(userId != null);
         ItemGoal condition = new ItemGoal();
         condition.setUserId(userId);
-        return nonEmptyList(listByCondition(condition, new ArrayList<OrderCondition>()));
+
+        List<OrderCondition> orderConditions = new ArrayList<>();
+        orderConditions.add(new OrderCondition("create_time", "desc"));
+        return nonEmptyList(listByCondition(condition, orderConditions);
     }
 
     @Override
