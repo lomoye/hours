@@ -20,6 +20,7 @@
         <typeAlias alias="Article" type="com.lomoye.hours.core.domain.Article"/>
         <typeAlias alias="VersionNote" type="com.lomoye.hours.core.domain.VersionNote"/>
         <typeAlias alias="ItemGoal" type="com.lomoye.hours.core.domain.ItemGoal"/>
+        <typeAlias alias="UserSuggest" type="com.lomoye.hours.core.domain.UserSuggest"/>
     </typeAliases>
 
     <mappers>
@@ -34,6 +35,8 @@
         <mapper resource="com/lomoye/hours/core/dao/ArticleMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/VersionNoteMapper.xml"/>
         <mapper resource="com/lomoye/hours/core/dao/ItemGoalMapper.xml"/>
+
+        <mapper resource="com/lomoye/hours/core/dao/UserSuggestMapper.xml"/>
     </mappers>
 
 </configuration>

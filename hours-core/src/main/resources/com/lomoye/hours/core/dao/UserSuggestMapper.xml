@@ -1,0 +1,81 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lomoye.hours.core.dao.UserSuggestMapper">
+    <sql id="condition">
+        <where>
+            <if test="condition.id != null">
+                id = #{condition.id}
+            </if>
+            <if test="condition.userId != null">
+                AND user_id = #{condition.userId}
+            </if>
+            <if test="condition.userNick != null">
+                AND user_nick = #{condition.userNick}
+            </if>
+            <if test="condition.status != null">
+                AND `status` = #{condition.status}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="selectAllField">
+        select id,user_id,user_nick,title,content,`status`,create_time,modify_time from user_suggest
+    </sql>
+
+    <select id="selectWithPage" parameterType="Map" resultType="UserSuggest">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.lomoye.common.dao.paged"/>
+    </select>
+
+    <select id="selectByCondition" parameterType="Map" resultType="UserSuggest">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        <include refid="com.lomoye.common.dao.orderby"/>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="Long" resultType="UserSuggest">
+        <include refid="selectAllField"/>
+        where id=#{key}
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultType="UserSuggest">
+        <include refid="selectAllField"/>
+        <include refid="condition"/>
+        limit 1
+    </select>
+
+    <select id="selectCount" parameterType="Map" resultType="long">
+        select count(*) from user_suggest
+        <include refid="condition"/>
+    </select>
+
+    <insert id="insert" keyProperty="id" parameterType="UserSuggest">
+        insert into user_suggest
+        (user_id,user_nick,title,content,`status`,create_time,modify_time)
+        VALUES
+        (#{userId},#{userNick},#{title},#{content},#{status},#{createTime},#{modifyTime})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="UserSuggest">
+        update user_suggest set 
+        user_id=#{userId},
+        user_nick=#{userNick},
+        title={title},
+        content=#{content},
+        `status`=#{status},
+        modify_time=#{modifyTime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="Long">
+        delete from user_suggest
+        where id = #{key}
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="Map">
+        delete from user_suggest
+        <include refid="condition"/>
+    </delete>
+</mapper>
